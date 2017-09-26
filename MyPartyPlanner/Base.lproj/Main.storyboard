@@ -1,14 +1,18 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--HomeViewController-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeViewController" title="HomeViewController" id="BYZ-38-t0r" customClass="HomeViewController" customModule="MyPartyPlanner" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -16,11 +20,119 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5aU-uY-31F">
+                                <rect key="frame" x="144" y="318" width="86" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Create Party"/>
+                                <connections>
+                                    <action selector="nextCreatePartyViewButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Okz-En-Tcy"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
+                    <connections>
+                        <segue destination="E9d-zj-thb" kind="show" identifier="CreatePartyViewSegue" id="uVi-da-Hy7"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="-119" y="36"/>
+        </scene>
+        <!--CreatePartyViewController-->
+        <scene sceneID="03A-Om-5gX">
+            <objects>
+                <viewController storyboardIdentifier="CreatePartyViewController" title="CreatePartyViewController" id="E9d-zj-thb" customClass="CreatePartyViewController" customModule="MyPartyPlanner" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="of1-6N-VT7"/>
+                        <viewControllerLayoutGuide type="bottom" id="gJp-SW-WT7"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="E0e-0J-rts">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="tRT-6t-fwm">
+                                <rect key="frame" x="128" y="181" width="94" height="29"/>
+                                <connections>
+                                    <action selector="stepperPeopleCounter:" destination="E9d-zj-thb" eventType="valueChanged" id="DWs-Nj-xwf"/>
+                                </connections>
+                            </stepper>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mZa-SF-7Uf">
+                                <rect key="frame" x="155" y="152" width="40" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="38" id="2Uv-dx-T5f"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Amount Of People" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sFq-yV-ZnJ">
+                                <rect key="frame" x="105" y="123" width="140" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <datePicker contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="Oe1-rB-XUa">
+                                <rect key="frame" x="0.0" y="235" width="375" height="216"/>
+                                <date key="date" timeIntervalSinceReferenceDate="528085438.455401">
+                                    <!--2017-09-26 02:23:58 +0000-->
+                                </date>
+                            </datePicker>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AXv-gJ-wSs">
+                                <rect key="frame" x="189" y="76" width="97" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="97" id="35Q-p2-AzE"/>
+                                </constraints>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Party Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aso-Or-Lht">
+                                <rect key="frame" x="88" y="81" width="90" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Create Party" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I3m-Fj-a9l">
+                                <rect key="frame" x="132" y="20" width="111" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UCU-if-0mb">
+                                <rect key="frame" x="144" y="629" width="86" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Create Party"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="mZa-SF-7Uf" firstAttribute="top" secondItem="sFq-yV-ZnJ" secondAttribute="bottom" constant="8" symbolic="YES" id="30z-74-RXs"/>
+                            <constraint firstItem="tRT-6t-fwm" firstAttribute="top" secondItem="mZa-SF-7Uf" secondAttribute="bottom" constant="8" symbolic="YES" id="6LK-Fr-o2m"/>
+                            <constraint firstItem="mZa-SF-7Uf" firstAttribute="centerX" secondItem="tRT-6t-fwm" secondAttribute="centerX" id="7mp-d8-Zzf"/>
+                            <constraint firstItem="Oe1-rB-XUa" firstAttribute="top" secondItem="tRT-6t-fwm" secondAttribute="bottom" constant="30" id="Bzd-Ko-TRY"/>
+                            <constraint firstItem="tRT-6t-fwm" firstAttribute="centerX" secondItem="Oe1-rB-XUa" secondAttribute="centerX" id="Cgj-sc-4uR"/>
+                            <constraint firstItem="AXv-gJ-wSs" firstAttribute="trailing" secondItem="tRT-6t-fwm" secondAttribute="trailing" id="FHA-4j-hCs"/>
+                            <constraint firstItem="sFq-yV-ZnJ" firstAttribute="centerX" secondItem="mZa-SF-7Uf" secondAttribute="centerX" id="FUX-MS-oFV"/>
+                            <constraint firstItem="sFq-yV-ZnJ" firstAttribute="top" secondItem="AXv-gJ-wSs" secondAttribute="bottom" constant="34" id="HW3-CP-RPL"/>
+                            <constraint firstItem="AXv-gJ-wSs" firstAttribute="top" secondItem="of1-6N-VT7" secondAttribute="bottom" constant="66" id="RGB-zb-rOS"/>
+                            <constraint firstAttribute="trailing" secondItem="Oe1-rB-XUa" secondAttribute="trailing" id="ehb-mh-97n"/>
+                            <constraint firstItem="Oe1-rB-XUa" firstAttribute="leading" secondItem="E0e-0J-rts" secondAttribute="leading" id="rTt-u4-JRB"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="bttnCreateParty" destination="UCU-if-0mb" id="cAf-W9-U89"/>
+                        <outlet property="dpPartyStartDate" destination="Oe1-rB-XUa" id="xKv-D9-8Ak"/>
+                        <outlet property="lblAmountOfPeople" destination="mZa-SF-7Uf" id="RA0-W0-Bgs"/>
+                        <outlet property="tbPartyName" destination="AXv-gJ-wSs" id="C8e-IJ-Zct"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dQg-Aw-crd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="760.79999999999995" y="36.431784107946029"/>
         </scene>
     </scenes>
 </document>

@@ -8,8 +8,12 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class HomeViewController: UIViewController {
 
+    @IBAction func nextCreatePartyViewButtonPressed(_ sender: UIButton) {
+        self.performSegue(withIdentifier: "CreatePartyViewSegue", sender: self)
+        
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.

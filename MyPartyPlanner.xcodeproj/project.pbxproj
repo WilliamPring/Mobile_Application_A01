@@ -8,11 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		3FF40C481F79D8F000DE43E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF40C471F79D8F000DE43E3 /* AppDelegate.swift */; };
-		3FF40C4A1F79D8F000DE43E3 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF40C491F79D8F000DE43E3 /* ViewController.swift */; };
+		3FF40C4A1F79D8F000DE43E3 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF40C491F79D8F000DE43E3 /* HomeViewController.swift */; };
 		3FF40C4D1F79D8F000DE43E3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3FF40C4B1F79D8F000DE43E3 /* Main.storyboard */; };
 		3FF40C4F1F79D8F000DE43E3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3FF40C4E1F79D8F000DE43E3 /* Assets.xcassets */; };
 		3FF40C521F79D8F000DE43E3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3FF40C501F79D8F000DE43E3 /* LaunchScreen.storyboard */; };
 		3FF40C5D1F79D8F000DE43E3 /* MyPartyPlannerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF40C5C1F79D8F000DE43E3 /* MyPartyPlannerTests.swift */; };
+		3FF40C681F79D94600DE43E3 /* CreatePartyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF40C671F79D94600DE43E3 /* CreatePartyViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,7 +29,7 @@
 /* Begin PBXFileReference section */
 		3FF40C441F79D8F000DE43E3 /* MyPartyPlanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyPartyPlanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FF40C471F79D8F000DE43E3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		3FF40C491F79D8F000DE43E3 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		3FF40C491F79D8F000DE43E3 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		3FF40C4C1F79D8F000DE43E3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		3FF40C4E1F79D8F000DE43E3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		3FF40C511F79D8F000DE43E3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -36,6 +37,7 @@
 		3FF40C581F79D8F000DE43E3 /* MyPartyPlannerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyPartyPlannerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FF40C5C1F79D8F000DE43E3 /* MyPartyPlannerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPartyPlannerTests.swift; sourceTree = "<group>"; };
 		3FF40C5E1F79D8F000DE43E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3FF40C671F79D94600DE43E3 /* CreatePartyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePartyViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,11 +80,12 @@
 			isa = PBXGroup;
 			children = (
 				3FF40C471F79D8F000DE43E3 /* AppDelegate.swift */,
-				3FF40C491F79D8F000DE43E3 /* ViewController.swift */,
+				3FF40C491F79D8F000DE43E3 /* HomeViewController.swift */,
 				3FF40C4B1F79D8F000DE43E3 /* Main.storyboard */,
 				3FF40C4E1F79D8F000DE43E3 /* Assets.xcassets */,
 				3FF40C501F79D8F000DE43E3 /* LaunchScreen.storyboard */,
 				3FF40C531F79D8F000DE43E3 /* Info.plist */,
+				3FF40C671F79D94600DE43E3 /* CreatePartyViewController.swift */,
 			);
 			path = MyPartyPlanner;
 			sourceTree = "<group>";
@@ -199,8 +202,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3FF40C4A1F79D8F000DE43E3 /* ViewController.swift in Sources */,
+				3FF40C4A1F79D8F000DE43E3 /* HomeViewController.swift in Sources */,
 				3FF40C481F79D8F000DE43E3 /* AppDelegate.swift in Sources */,
+				3FF40C681F79D94600DE43E3 /* CreatePartyViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
