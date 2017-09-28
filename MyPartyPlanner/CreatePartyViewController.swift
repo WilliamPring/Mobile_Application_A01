@@ -10,6 +10,8 @@ import UIKit
 
 class CreatePartyViewController: UIViewController {
     
+    
+    /*
     @IBOutlet weak var lblAmountOfPeople: UILabel!
   
     @IBOutlet weak var tbPartyName: UITextField!
@@ -18,6 +20,8 @@ class CreatePartyViewController: UIViewController {
         lblAmountOfPeople.text = String(sender.value)
         
     }
+    */
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -27,11 +31,6 @@ class CreatePartyViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         
-    }
-    
-    @IBAction func BackButtonPressed(_ sender: UIButton) {
-        
-        self.dismiss(animated: true, completion: nil)
     }
     
 }

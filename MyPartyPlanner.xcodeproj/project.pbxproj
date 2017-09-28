@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		3FBBF1A61F7A8E93003B6E04 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FBBF1A51F7A8E93003B6E04 /* MapKit.framework */; };
 		3FBBF1A81F7A9E25003B6E04 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBBF1A71F7A9E25003B6E04 /* MapViewController.swift */; };
+		3FF2BCC11F7D6CDA003DC42D /* Party.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF2BCC01F7D6CDA003DC42D /* Party.swift */; };
+		3FF2BCC31F7D7152003DC42D /* PartyTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF2BCC21F7D7152003DC42D /* PartyTableViewCell.swift */; };
+		3FF2BCC71F7D795A003DC42D /* PartyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF2BCC61F7D795A003DC42D /* PartyTableViewController.swift */; };
 		3FF40C481F79D8F000DE43E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF40C471F79D8F000DE43E3 /* AppDelegate.swift */; };
 		3FF40C4A1F79D8F000DE43E3 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF40C491F79D8F000DE43E3 /* HomeViewController.swift */; };
 		3FF40C4D1F79D8F000DE43E3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3FF40C4B1F79D8F000DE43E3 /* Main.storyboard */; };
@@ -32,6 +35,9 @@
 /* Begin PBXFileReference section */
 		3FBBF1A51F7A8E93003B6E04 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		3FBBF1A71F7A9E25003B6E04 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		3FF2BCC01F7D6CDA003DC42D /* Party.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Party.swift; sourceTree = "<group>"; };
+		3FF2BCC21F7D7152003DC42D /* PartyTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyTableViewCell.swift; sourceTree = "<group>"; };
+		3FF2BCC61F7D795A003DC42D /* PartyTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyTableViewController.swift; sourceTree = "<group>"; };
 		3FF40C441F79D8F000DE43E3 /* MyPartyPlanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyPartyPlanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FF40C471F79D8F000DE43E3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3FF40C491F79D8F000DE43E3 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -98,6 +104,9 @@
 				3FF40C471F79D8F000DE43E3 /* AppDelegate.swift */,
 				3FF40C491F79D8F000DE43E3 /* HomeViewController.swift */,
 				3FF40C4B1F79D8F000DE43E3 /* Main.storyboard */,
+				3FF2BCC61F7D795A003DC42D /* PartyTableViewController.swift */,
+				3FF2BCC21F7D7152003DC42D /* PartyTableViewCell.swift */,
+				3FF2BCC01F7D6CDA003DC42D /* Party.swift */,
 				3FF40C4E1F79D8F000DE43E3 /* Assets.xcassets */,
 				3FF40C501F79D8F000DE43E3 /* LaunchScreen.storyboard */,
 				3FF40C531F79D8F000DE43E3 /* Info.plist */,
@@ -220,10 +229,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3FF2BCC71F7D795A003DC42D /* PartyTableViewController.swift in Sources */,
 				3FF40C6A1F7A84CF00DE43E3 /* PartyDetailViewController.swift in Sources */,
 				3FF40C4A1F79D8F000DE43E3 /* HomeViewController.swift in Sources */,
 				3FF40C481F79D8F000DE43E3 /* AppDelegate.swift in Sources */,
 				3FBBF1A81F7A9E25003B6E04 /* MapViewController.swift in Sources */,
+				3FF2BCC31F7D7152003DC42D /* PartyTableViewCell.swift in Sources */,
+				3FF2BCC11F7D6CDA003DC42D /* Party.swift in Sources */,
 				3FF40C681F79D94600DE43E3 /* CreatePartyViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
