@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3FBBF1A61F7A8E93003B6E04 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FBBF1A51F7A8E93003B6E04 /* MapKit.framework */; };
+		3FBBF1A81F7A9E25003B6E04 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FBBF1A71F7A9E25003B6E04 /* MapViewController.swift */; };
 		3FF40C481F79D8F000DE43E3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF40C471F79D8F000DE43E3 /* AppDelegate.swift */; };
 		3FF40C4A1F79D8F000DE43E3 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF40C491F79D8F000DE43E3 /* HomeViewController.swift */; };
 		3FF40C4D1F79D8F000DE43E3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3FF40C4B1F79D8F000DE43E3 /* Main.storyboard */; };
@@ -14,6 +16,7 @@
 		3FF40C521F79D8F000DE43E3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3FF40C501F79D8F000DE43E3 /* LaunchScreen.storyboard */; };
 		3FF40C5D1F79D8F000DE43E3 /* MyPartyPlannerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF40C5C1F79D8F000DE43E3 /* MyPartyPlannerTests.swift */; };
 		3FF40C681F79D94600DE43E3 /* CreatePartyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF40C671F79D94600DE43E3 /* CreatePartyViewController.swift */; };
+		3FF40C6A1F7A84CF00DE43E3 /* PartyDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF40C691F7A84CF00DE43E3 /* PartyDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,6 +30,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3FBBF1A51F7A8E93003B6E04 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		3FBBF1A71F7A9E25003B6E04 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		3FF40C441F79D8F000DE43E3 /* MyPartyPlanner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyPartyPlanner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FF40C471F79D8F000DE43E3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3FF40C491F79D8F000DE43E3 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -38,6 +43,7 @@
 		3FF40C5C1F79D8F000DE43E3 /* MyPartyPlannerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPartyPlannerTests.swift; sourceTree = "<group>"; };
 		3FF40C5E1F79D8F000DE43E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3FF40C671F79D94600DE43E3 /* CreatePartyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePartyViewController.swift; sourceTree = "<group>"; };
+		3FF40C691F7A84CF00DE43E3 /* PartyDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3FBBF1A61F7A8E93003B6E04 /* MapKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,12 +65,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3FBBF1A41F7A8E93003B6E04 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3FBBF1A51F7A8E93003B6E04 /* MapKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		3FF40C3B1F79D8F000DE43E3 = {
 			isa = PBXGroup;
 			children = (
 				3FF40C461F79D8F000DE43E3 /* MyPartyPlanner */,
 				3FF40C5B1F79D8F000DE43E3 /* MyPartyPlannerTests */,
 				3FF40C451F79D8F000DE43E3 /* Products */,
+				3FBBF1A41F7A8E93003B6E04 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -86,6 +102,8 @@
 				3FF40C501F79D8F000DE43E3 /* LaunchScreen.storyboard */,
 				3FF40C531F79D8F000DE43E3 /* Info.plist */,
 				3FF40C671F79D94600DE43E3 /* CreatePartyViewController.swift */,
+				3FF40C691F7A84CF00DE43E3 /* PartyDetailViewController.swift */,
+				3FBBF1A71F7A9E25003B6E04 /* MapViewController.swift */,
 			);
 			path = MyPartyPlanner;
 			sourceTree = "<group>";
@@ -202,8 +220,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3FF40C6A1F7A84CF00DE43E3 /* PartyDetailViewController.swift in Sources */,
 				3FF40C4A1F79D8F000DE43E3 /* HomeViewController.swift in Sources */,
 				3FF40C481F79D8F000DE43E3 /* AppDelegate.swift in Sources */,
+				3FBBF1A81F7A9E25003B6E04 /* MapViewController.swift in Sources */,
 				3FF40C681F79D94600DE43E3 /* CreatePartyViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -412,6 +432,7 @@
 				3FF40C631F79D8F000DE43E3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3FF40C641F79D8F000DE43E3 /* Build configuration list for PBXNativeTarget "MyPartyPlannerTests" */ = {
 			isa = XCConfigurationList;
@@ -420,6 +441,7 @@
 				3FF40C661F79D8F000DE43E3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -29,16 +29,91 @@
                                     <action selector="nextCreatePartyViewButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Okz-En-Tcy"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="egh-bm-8dW">
+                                <rect key="frame" x="144" y="356" width="76" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="PartyDetailViewButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hjJ-7b-Kib"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <connections>
-                        <segue destination="E9d-zj-thb" kind="show" identifier="CreatePartyViewSegue" id="uVi-da-Hy7"/>
+                        <segue destination="eT6-y5-EAf" kind="show" identifier="CreatePartyViewSegue" id="uVi-da-Hy7"/>
+                        <segue destination="ujc-bZ-FDv" kind="show" identifier="PartyDetailViewSegue" id="a0O-ap-eiU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-119" y="36"/>
+            <point key="canvasLocation" x="-119.2" y="35.532233883058474"/>
+        </scene>
+        <!--Party Detail View Controller-->
+        <scene sceneID="BP3-EL-219">
+            <objects>
+                <viewController storyboardIdentifier="PartyDetailViewController" id="ujc-bZ-FDv" customClass="PartyDetailViewController" customModule="MyPartyPlanner" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="UW5-T8-JOf"/>
+                        <viewControllerLayoutGuide type="bottom" id="5NU-t6-hiX"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="AeP-H3-7ey">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="TEST" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="USI-5G-85O">
+                                <rect key="frame" x="36" y="118" width="166" height="75"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sdy-pB-YaE">
+                                <rect key="frame" x="16" y="20" width="56" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <state key="normal" title="Back"/>
+                                <connections>
+                                    <action selector="BackButtonPressed:" destination="ujc-bZ-FDv" eventType="touchUpInside" id="lPV-l6-b4Q"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Iqz-A7-RHQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-119.2" y="858.62068965517244"/>
+        </scene>
+        <!--Map-->
+        <scene sceneID="Je8-UB-sxz">
+            <objects>
+                <viewController id="eZz-Mx-vbv" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="qU1-wz-EY0"/>
+                        <viewControllerLayoutGuide type="bottom" id="d9F-Wb-kLF"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="tic-dp-cEz">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="XVT-4h-Evx">
+                                <rect key="frame" x="0.0" y="20" width="375" height="598"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="d9F-Wb-kLF" firstAttribute="top" secondItem="XVT-4h-Evx" secondAttribute="bottom" id="GQH-gi-VI8"/>
+                            <constraint firstItem="XVT-4h-Evx" firstAttribute="top" secondItem="qU1-wz-EY0" secondAttribute="bottom" id="M2M-M4-D5r"/>
+                            <constraint firstAttribute="trailing" secondItem="XVT-4h-Evx" secondAttribute="trailing" id="O4m-CZ-zly"/>
+                            <constraint firstItem="XVT-4h-Evx" firstAttribute="leading" secondItem="tic-dp-cEz" secondAttribute="leading" id="o5q-0O-xDW"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Map" image="MapIcon" id="96e-wx-ZZC"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TMb-L9-eif" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="761" y="859"/>
         </scene>
         <!--CreatePartyViewController-->
         <scene sceneID="03A-Om-5gX">
@@ -53,13 +128,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="tRT-6t-fwm">
-                                <rect key="frame" x="128" y="181" width="94" height="29"/>
+                                <rect key="frame" x="128" y="265" width="94" height="29"/>
                                 <connections>
                                     <action selector="stepperPeopleCounter:" destination="E9d-zj-thb" eventType="valueChanged" id="DWs-Nj-xwf"/>
                                 </connections>
                             </stepper>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mZa-SF-7Uf">
-                                <rect key="frame" x="155" y="152" width="40" height="21"/>
+                                <rect key="frame" x="155" y="222" width="40" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="38" id="2Uv-dx-T5f"/>
                                 </constraints>
@@ -68,19 +143,19 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Amount Of People" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sFq-yV-ZnJ">
-                                <rect key="frame" x="105" y="123" width="140" height="21"/>
+                                <rect key="frame" x="103" y="193" width="140" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <datePicker contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="Oe1-rB-XUa">
-                                <rect key="frame" x="0.0" y="235" width="375" height="216"/>
+                                <rect key="frame" x="0.0" y="345" width="375" height="216"/>
                                 <date key="date" timeIntervalSinceReferenceDate="528085438.455401">
                                     <!--2017-09-26 02:23:58 +0000-->
                                 </date>
                             </datePicker>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AXv-gJ-wSs">
-                                <rect key="frame" x="189" y="76" width="97" height="30"/>
+                                <rect key="frame" x="165" y="155" width="97" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="97" id="35Q-p2-AzE"/>
                                 </constraints>
@@ -89,14 +164,14 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Party Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aso-Or-Lht">
-                                <rect key="frame" x="88" y="81" width="90" height="21"/>
+                                <rect key="frame" x="64" y="160" width="90" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Create Party" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I3m-Fj-a9l">
-                                <rect key="frame" x="132" y="20" width="111" height="24"/>
+                                <rect key="frame" x="128" y="96" width="111" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <nil key="textColor"/>
@@ -106,6 +181,14 @@
                                 <rect key="frame" x="144" y="629" width="86" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Create Party"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8FO-96-Aro">
+                                <rect key="frame" x="16" y="14" width="46" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="BackButtonPressed:" destination="E9d-zj-thb" eventType="touchUpInside" id="yYK-21-eRD"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -123,6 +206,7 @@
                             <constraint firstItem="Oe1-rB-XUa" firstAttribute="leading" secondItem="E0e-0J-rts" secondAttribute="leading" id="rTt-u4-JRB"/>
                         </constraints>
                     </view>
+                    <tabBarItem key="tabBarItem" title="Details" image="ViewDetailsIcon" id="KBV-ye-hgf"/>
                     <connections>
                         <outlet property="bttnCreateParty" destination="UCU-if-0mb" id="cAf-W9-U89"/>
                         <outlet property="dpPartyStartDate" destination="Oe1-rB-XUa" id="xKv-D9-8Ak"/>
@@ -132,7 +216,29 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dQg-Aw-crd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="1700" y="36.431784107946029"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="r8B-YK-LGX">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Jd9-yc-a7h" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="eT6-y5-EAf" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="as1-I0-ygt">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="E9d-zj-thb" kind="relationship" relationship="viewControllers" id="zLS-UL-9l2"/>
+                        <segue destination="eZz-Mx-vbv" kind="relationship" relationship="viewControllers" id="Fyc-T3-8Vi"/>
+                    </connections>
+                </tabBarController>
+            </objects>
             <point key="canvasLocation" x="760.79999999999995" y="36.431784107946029"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="MapIcon" width="25" height="25"/>
+        <image name="ViewDetailsIcon" width="25" height="25"/>
+    </resources>
 </document>

@@ -24,6 +24,9 @@ class HomeViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    @IBAction func PartyDetailViewButtonPressed(_ sender: UIButton) {
+        self.performSegue(withIdentifier: "PartyDetailViewSegue", sender: self)
+    }
 
 }
 
