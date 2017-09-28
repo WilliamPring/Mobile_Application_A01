@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import os.log
 
 class PartyTableViewController: UITableViewController {
     
@@ -114,14 +115,48 @@ class PartyTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        super.prepare(for: segue, sender: sender)
+        
+        switch(segue.identifier ?? "") {
+            case "AddItem":
+                os_log("Adding new party.", log: OSLog.default, type: .debug) //Does not require a change in scene
+            
+            case "ShowDetail":
+                //Get the controller
+                guard let pDetailViewController = segue.destination as? HomeViewController else {
+                    fatalError("Unexpected destination: \(segue.destination)")
+                }
+                
+                //Get the selected cell from the table views
+                guard let selectedPartyCell = sender as? PartyTableViewCell else {
+                        fatalError("Unexpected sender: \(sender)")
+                }
+            
+                //Get the correct index to look in the party list array 
+                guard let indexPath = tableView.indexPath(for: selectedPartyCell) else {
+                    fatalError("The selected cell is not being displayed by the table")
+                }
+            
+                //Grab the correct party now that the information has been obtained
+                let theParty = parties[indexPath.row]
+            
+                //Show the selected party, property of the HomeViewController classs
+                pDetailViewController.party = theParty
+            
+            default:
+                fatalError("Unexpected Segue Identifier; \(segue.identifier)")
+        }
+        
+        
+        
     }
-    */
+ 
 
 }

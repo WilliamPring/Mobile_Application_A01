@@ -9,7 +9,7 @@
 import UIKit
 import os.log
 
-class HomeViewController: UIViewController, UINavigationControllerDelegate {
+class HomeViewController: UIViewController, UITabBarControllerDelegate, UINavigationControllerDelegate {
 
     //MARK: Properties
     
@@ -17,13 +17,32 @@ class HomeViewController: UIViewController, UINavigationControllerDelegate {
     
     @IBOutlet weak var saveButton: UIBarButtonItem!
     
+    
     //MARK: Navigation
     
     
     @IBAction func cancel(_ sender: UIBarButtonItem) {
+        
+        //Controller is dismissed in two different ways due to style of presentation (modal or push)
+        //Show if detail scene was presenting by user tapping on the party item
+        
+        self.navigationController?.popViewController(animated: true) //Pop off the Navigation stack
         dismiss(animated: true, completion: nil)
         
+        /*
+        let isPresentingInAddPartyMode = presentingViewController is UINavigationController
+        
+        if isPresentingInAddPartyMode {
+            dismiss(animated: true, completion: nil)
+        } else if let owningNavigationController = navigationController {
+            self.navigationController?.popViewController(animated: true) //Pop off the Navigation stack
+
+        } else {
+            fatalError("The HomeViewController is not inside a navigation controller")
+        }
+        */
     }
+   
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
