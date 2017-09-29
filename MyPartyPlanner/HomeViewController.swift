@@ -9,14 +9,14 @@
 import UIKit
 import os.log
 
-class HomeViewController: UIViewController, UITabBarControllerDelegate, UINavigationControllerDelegate {
+class HomeViewController: UIViewController, UITextFieldDelegate, UINavigationControllerDelegate {
 
     //MARK: Properties
     
     var party: Party?
     
     @IBOutlet weak var saveButton: UIBarButtonItem!
-    
+    @IBOutlet weak var partyNameTextField: UITextField!
     
     //MARK: Navigation
     
@@ -72,6 +72,14 @@ class HomeViewController: UIViewController, UITabBarControllerDelegate, UINaviga
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        partyNameTextField.delegate = self
+        
+        if let party = party {
+            partyNameTextField.text = party.eventName
+        }
+        
+        
     }
 
     override func didReceiveMemoryWarning() {
