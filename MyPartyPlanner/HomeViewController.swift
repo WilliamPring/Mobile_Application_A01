@@ -10,14 +10,17 @@ import UIKit
 import MapKit
 import os.log
 
-class HomeViewController: UIViewController, UITextFieldDelegate, UINavigationControllerDelegate {
+class HomeViewController: UIViewController, UITextFieldDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
 
     //MARK: Properties
     
     var party: Party?
+    var locationOptions = ["Canada, Vancouver", "Canada, Toronto", "USA, New York", "USA, Seattle", "USA, San Francisco"]
+    var selectedLocation: String = ""
     
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var partyNameTextField: UITextField!
+    @IBOutlet weak var pickerView: UIPickerView!
     
     //MARK: Navigation
     
@@ -26,22 +29,8 @@ class HomeViewController: UIViewController, UITextFieldDelegate, UINavigationCon
         
         //Controller is dismissed in two different ways due to style of presentation (modal or push)
         //Show if detail scene was presenting by user tapping on the party item
-        
         self.navigationController?.popViewController(animated: true) //Pop off the Navigation stack
         dismiss(animated: true, completion: nil)
-        
-        /*
-        let isPresentingInAddPartyMode = presentingViewController is UINavigationController
-        
-        if isPresentingInAddPartyMode {
-            dismiss(animated: true, completion: nil)
-        } else if let owningNavigationController = navigationController {
-            self.navigationController?.popViewController(animated: true) //Pop off the Navigation stack
-
-        } else {
-            fatalError("The HomeViewController is not inside a navigation controller")
-        }
-        */
     }
    
     
@@ -54,25 +43,25 @@ class HomeViewController: UIViewController, UITextFieldDelegate, UINavigationCon
             return
         }
         
-        let name: String = "anotherTest"
-        let location: String = "New York"
+        let name: String = partyNameTextField.text!
+        let location: String = selectedLocation
         let randDate: Date = Date()
         let amountOfPeople: Int = 100
         let randCoordinateLocation = CLLocationCoordinate2DMake(43.390297, -80.403226) //Points at Conestoga College
 
         party = Party(title: name, subtitle: "", location: location, dateOfEvent: randDate, amountOfPeople: amountOfPeople, coordinate: randCoordinateLocation)
+        party?.location = location
     }
-    
-    
-    
     
     
     @IBAction func nextCreatePartyViewButtonPressed(_ sender: UIButton) {
         self.performSegue(withIdentifier: "CreatePartyViewSegue", sender: self)
-        
     }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // Do any additional setup after loading the view, typically from a nib.
         
         partyNameTextField.delegate = self
@@ -81,16 +70,40 @@ class HomeViewController: UIViewController, UITextFieldDelegate, UINavigationCon
             partyNameTextField.text = party.title
         }
         
+        pickerView.dataSource = self
+        pickerView.delegate = self
+        self.pickerView(self.pickerView, didSelectRow: 0, inComponent: 0)
         
     }
 
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
 
+    
     @IBAction func PartyDetailViewButtonPressed(_ sender: UIButton) {
         self.performSegue(withIdentifier: "PartyDetailViewSegue", sender: self)
+    }
+    
+    
+    //PICKER VIEW related methods
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return locationOptions.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int ) -> String? {
+        return locationOptions[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        selectedLocation = locationOptions[row]
+    }
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
     }
 
 }

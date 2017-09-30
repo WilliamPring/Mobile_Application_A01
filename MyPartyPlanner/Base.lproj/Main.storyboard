@@ -117,18 +117,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PHE-MM-7Ph">
-                                <rect key="frame" x="98" y="311" width="178" height="44"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                            </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4qK-i5-bZP">
-                                <rect key="frame" x="98" y="182" width="178" height="30"/>
+                                <rect key="frame" x="16" y="72" width="178" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <pickerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="s3W-KI-y9L">
+                                <rect key="frame" x="0.0" y="143" width="375" height="159"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                            </pickerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -148,6 +147,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="partyNameTextField" destination="4qK-i5-bZP" id="aHO-AF-6Lm"/>
+                        <outlet property="pickerView" destination="s3W-KI-y9L" id="PoR-TF-V8T"/>
                         <outlet property="saveButton" destination="O6n-zO-hWJ" id="AMc-1c-HXN"/>
                     </connections>
                 </viewController>
@@ -159,6 +159,7 @@
         <!--Parties-->
         <scene sceneID="o0b-FO-Jcp">
             <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eLi-hV-E9m" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="ExR-vL-TwO" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Parties" image="ViewDetailsIcon" id="mDt-a2-XIw"/>
                     <toolbarItems/>
@@ -171,7 +172,6 @@
                         <segue destination="6d7-ss-GlK" kind="relationship" relationship="rootViewController" id="Au8-3r-rjo"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="eLi-hV-E9m" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="760.79999999999995" y="-694.00299850074964"/>
         </scene>
@@ -200,6 +200,6 @@
         <image name="ViewDetailsIcon" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ySo-gu-HgG"/>
+        <segue reference="hBU-em-lqw"/>
     </inferredMetricsTieBreakers>
 </document>

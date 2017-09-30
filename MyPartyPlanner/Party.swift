@@ -8,13 +8,37 @@
 
 import UIKit
 import MapKit
+import CoreLocation
 
 class Party : NSObject, MKAnnotation {
     
     //MARK: Properties (Custom)
-    var location: String
     var dateOfEvent: Date
     var amountOfPeople: Int
+    
+    lazy var geocoder = CLGeocoder()
+    
+    var location: String {
+    
+        willSet{
+            //Forward Geocoding 
+            
+             geocoder.geocodeAddressString(newValue) { (placemarks, error) in
+                var newLocation: CLLocation?
+                
+                if let placemarks = placemarks, placemarks.count > 0 {
+                    newLocation = placemarks.first?.location
+                }
+                
+                if let newLocation = newLocation {
+                    let newCoordinate = newLocation.coordinate
+                    self.coordinate = newCoordinate
+                }
+            }
+        }
+    
+    }
+    
     
     //Conforming to the MKAnnotation protocol
     var title: String?

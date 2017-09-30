@@ -14,7 +14,6 @@ import CoreLocation
 class MapViewController: UIViewController, MKMapViewDelegate {
     
     //MARK: Properties
-    lazy var geocoder = CLGeocoder()
     lazy var allAnnotations: [MKAnnotation]? = nil
 
     var mapView : MKMapView!
@@ -23,11 +22,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     func mapTypeChange(_ segControl: UISegmentedControl) {
         var _ : Int = 0
-        
-    }
-    
-    func processResponse(withPlaceMarks placemarks: [CLPlacemark]?, error: Error) {
-        
         
     }
     
@@ -52,11 +46,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         allAnnotations = pViewController.parties
 
         mapView.addAnnotations(allAnnotations!)
-        
-        /*
-        geocoder.geocodeAddressString("Canada, Toronto") { (placemarks, error) in
-            self.processResponse(withPlaceMarks: placemarks, error: error!)
-        } */
     }
     
     override func viewDidLoad() {
