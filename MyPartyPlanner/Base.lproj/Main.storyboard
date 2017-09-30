@@ -78,7 +78,7 @@
         <!--Map-->
         <scene sceneID="Je8-UB-sxz">
             <objects>
-                <viewController id="eZz-Mx-vbv" sceneMemberID="viewController">
+                <viewController id="eZz-Mx-vbv" customClass="MapViewController" customModule="MyPartyPlanner" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="qU1-wz-EY0"/>
                         <viewControllerLayoutGuide type="bottom" id="d9F-Wb-kLF"/>

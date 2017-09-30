@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 import os.log
 
 class HomeViewController: UIViewController, UITextFieldDelegate, UINavigationControllerDelegate {
@@ -57,8 +58,9 @@ class HomeViewController: UIViewController, UITextFieldDelegate, UINavigationCon
         let location: String = "New York"
         let randDate: Date = Date()
         let amountOfPeople: Int = 100
-        
-        party = Party(eventName: name, location: location, dateOfEvent: randDate, amountOfPeople: amountOfPeople)
+        let randCoordinateLocation = CLLocationCoordinate2DMake(43.390297, -80.403226) //Points at Conestoga College
+
+        party = Party(title: name, subtitle: "", location: location, dateOfEvent: randDate, amountOfPeople: amountOfPeople, coordinate: randCoordinateLocation)
     }
     
     
@@ -76,7 +78,7 @@ class HomeViewController: UIViewController, UITextFieldDelegate, UINavigationCon
         partyNameTextField.delegate = self
         
         if let party = party {
-            partyNameTextField.text = party.eventName
+            partyNameTextField.text = party.title
         }
         
         

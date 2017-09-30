@@ -7,22 +7,26 @@
 //
 
 import UIKit
+import MapKit
 
-class Party {
+class Party : NSObject, MKAnnotation {
     
-    //MARK: Properties 
-    
-    var eventName: String
+    //MARK: Properties (Custom)
     var location: String
     var dateOfEvent: Date
     var amountOfPeople: Int
     
+    //Conforming to the MKAnnotation protocol
+    var title: String?
+    var subtitle: String?
+    var coordinate: CLLocationCoordinate2D
     
-    init(eventName: String, location: String, dateOfEvent: Date, amountOfPeople: Int) {
-        self.eventName = eventName
+    init(title: String, subtitle: String, location: String, dateOfEvent: Date, amountOfPeople: Int, coordinate: CLLocationCoordinate2D) {
+        self.title = title
         self.location = location
         self.dateOfEvent = dateOfEvent
         self.amountOfPeople = amountOfPeople
+        self.coordinate = coordinate
     }
     
     

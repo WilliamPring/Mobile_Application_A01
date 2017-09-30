@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 import os.log
 
 class PartyTableViewController: UITableViewController {
@@ -26,12 +27,15 @@ class PartyTableViewController: UITableViewController {
     //MARK: Private Methods
     private func loadAllParties() {
         
+        let randCoordinateLocation = CLLocationCoordinate2DMake(43.390297, -80.403226) //Points at Conestoga College
+        
+        //Create some sample data to preload for the user to see
         let testDate: Date = Date()
-        let partyOne = Party(eventName: "TEST_1", location: "San Fran", dateOfEvent: testDate, amountOfPeople: 10)
-        let partyTwo = Party(eventName: "TEST_2", location: "San Fran", dateOfEvent: testDate, amountOfPeople: 10)
-        let partyThree = Party(eventName: "TEST_3", location: "San Fran", dateOfEvent: testDate, amountOfPeople: 10)
+        let partyOne   = Party(title: "TEST_1", subtitle: "", location: "Kitchener", dateOfEvent: testDate, amountOfPeople: 10, coordinate: randCoordinateLocation)
+        let partyTwo   = Party(title: "TEST_2", subtitle: "", location: "Vancouver", dateOfEvent: testDate, amountOfPeople: 10, coordinate: randCoordinateLocation)
+        let partyThree = Party(title: "TEST_3", subtitle: "", location: "Toronto",   dateOfEvent: testDate, amountOfPeople: 10, coordinate: randCoordinateLocation)
 
-        parties += [partyOne, partyTwo, partyThree]
+        parties += [partyOne, partyTwo, partyThree] //Add party objects to the collection
     }
     
     override func viewDidLoad() {
@@ -39,11 +43,8 @@ class PartyTableViewController: UITableViewController {
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
-                
-        self.navigationItem.leftBarButtonItem = self.editButtonItem
+        
+        self.navigationItem.leftBarButtonItem = self.editButtonItem //Handles deletion of cells in that TableView
         
         loadAllParties()
     }
@@ -69,12 +70,10 @@ class PartyTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cellIdentifier: String = "PartyTableViewCell"
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! PartyTableViewCell
-        
         let party = parties[indexPath.row]
         
-        cell.nameLabel.text = party.eventName
+        cell.nameLabel.text = party.title
 
         // Configure the cell...
 
@@ -86,7 +85,6 @@ class PartyTableViewController: UITableViewController {
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
-        
         return true
     }
  
@@ -140,7 +138,7 @@ class PartyTableViewController: UITableViewController {
                 
                 //Get the selected cell from the table views
                 guard let selectedPartyCell = sender as? PartyTableViewCell else {
-                        fatalError("Unexpected sender: \(sender)")
+                        fatalError("Unexpected sender error")
                 }
             
                 //Get the correct index to look in the party list array 
@@ -155,7 +153,7 @@ class PartyTableViewController: UITableViewController {
                 pDetailViewController.party = theParty
             
             default:
-                fatalError("Unexpected Segue Identifier; \(segue.identifier)")
+                fatalError("Unexpected Segue Identifier error")
         }
         
         

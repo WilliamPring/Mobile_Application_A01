@@ -18,8 +18,6 @@
 		3FF40C4F1F79D8F000DE43E3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3FF40C4E1F79D8F000DE43E3 /* Assets.xcassets */; };
 		3FF40C521F79D8F000DE43E3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3FF40C501F79D8F000DE43E3 /* LaunchScreen.storyboard */; };
 		3FF40C5D1F79D8F000DE43E3 /* MyPartyPlannerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF40C5C1F79D8F000DE43E3 /* MyPartyPlannerTests.swift */; };
-		3FF40C681F79D94600DE43E3 /* CreatePartyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF40C671F79D94600DE43E3 /* CreatePartyViewController.swift */; };
-		3FF40C6A1F7A84CF00DE43E3 /* PartyDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF40C691F7A84CF00DE43E3 /* PartyDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,8 +46,6 @@
 		3FF40C581F79D8F000DE43E3 /* MyPartyPlannerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyPartyPlannerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FF40C5C1F79D8F000DE43E3 /* MyPartyPlannerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPartyPlannerTests.swift; sourceTree = "<group>"; };
 		3FF40C5E1F79D8F000DE43E3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3FF40C671F79D94600DE43E3 /* CreatePartyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePartyViewController.swift; sourceTree = "<group>"; };
-		3FF40C691F7A84CF00DE43E3 /* PartyDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PartyDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,8 +106,6 @@
 				3FF40C4E1F79D8F000DE43E3 /* Assets.xcassets */,
 				3FF40C501F79D8F000DE43E3 /* LaunchScreen.storyboard */,
 				3FF40C531F79D8F000DE43E3 /* Info.plist */,
-				3FF40C671F79D94600DE43E3 /* CreatePartyViewController.swift */,
-				3FF40C691F7A84CF00DE43E3 /* PartyDetailViewController.swift */,
 				3FBBF1A71F7A9E25003B6E04 /* MapViewController.swift */,
 			);
 			path = MyPartyPlanner;
@@ -230,13 +224,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				3FF2BCC71F7D795A003DC42D /* PartyTableViewController.swift in Sources */,
-				3FF40C6A1F7A84CF00DE43E3 /* PartyDetailViewController.swift in Sources */,
 				3FF40C4A1F79D8F000DE43E3 /* HomeViewController.swift in Sources */,
 				3FF40C481F79D8F000DE43E3 /* AppDelegate.swift in Sources */,
 				3FBBF1A81F7A9E25003B6E04 /* MapViewController.swift in Sources */,
 				3FF2BCC31F7D7152003DC42D /* PartyTableViewCell.swift in Sources */,
 				3FF2BCC11F7D6CDA003DC42D /* Party.swift in Sources */,
-				3FF40C681F79D94600DE43E3 /* CreatePartyViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,10 +9,55 @@
 
 import UIKit
 import MapKit
+import CoreLocation
 
-class MapViewController: UIViewController {
+class MapViewController: UIViewController, MKMapViewDelegate {
     
-    var mapView : MKMapView! //Outlet
+    //MARK: Properties
+    lazy var geocoder = CLGeocoder()
+    lazy var allAnnotations: [MKAnnotation]? = nil
+
+    var mapView : MKMapView!
+    
+    //MARK: Methods
+    
+    func mapTypeChange(_ segControl: UISegmentedControl) {
+        var _ : Int = 0
+        
+    }
+    
+    func processResponse(withPlaceMarks placemarks: [CLPlacemark]?, error: Error) {
+        
+        
+    }
+    
+    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
+        if let annotationTitle = view.annotation?.title {
+            print("USER TAPPED: \(annotationTitle)")
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        //Load all the annotations on the map
+        let tblController   = self.tabBarController?.viewControllers?[0] as! UINavigationController
+        let pViewController = tblController.viewControllers[0] as! PartyTableViewController
+        
+        //First clear the map
+        if allAnnotations != nil
+        {
+            self.mapView.removeAnnotations(allAnnotations!)
+        }
+        
+        //Now add the new pins
+        allAnnotations = pViewController.parties
+
+        mapView.addAnnotations(allAnnotations!)
+        
+        /*
+        geocoder.geocodeAddressString("Canada, Toronto") { (placemarks, error) in
+            self.processResponse(withPlaceMarks: placemarks, error: error!)
+        } */
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -46,18 +91,19 @@ class MapViewController: UIViewController {
         segmentedControl.addTarget(self,
                                    action: #selector(MapViewController.mapTypeChange(_:)),
                                    for: .valueChanged)
-        
-        
     }
     
-    func mapTypeChange(_ segControl: UISegmentedControl) {
-    
-    
-    }
+  
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        
     }
+    
+    
+    
+    
+    
+    
+    
     
 }
