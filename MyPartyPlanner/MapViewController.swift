@@ -23,12 +23,17 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     func mapTypeChange(_ segControl: UISegmentedControl) {
         var _ : Int = 0
         
-    }
-    
-    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
-        if let annotationTitle = view.annotation?.title {
-            print("USER TAPPED: \(annotationTitle)")
+        switch segControl.selectedSegmentIndex {
+        case 0:
+            mapView.mapType = .standard
+        case 1:
+            mapView.mapType = .hybrid
+        case 2:
+            mapView.mapType = .satellite
+        default:
+            break
         }
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -87,12 +92,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
-    
-    
-    
-    
-    
     
     
 }

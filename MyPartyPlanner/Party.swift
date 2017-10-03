@@ -47,6 +47,7 @@ class Party : NSObject, MKAnnotation {
     
     init(title: String, subtitle: String, location: String, dateOfEvent: Date, amountOfPeople: Int, coordinate: CLLocationCoordinate2D) {
         self.title = title
+        self.subtitle = subtitle
         self.location = location
         self.dateOfEvent = dateOfEvent
         self.amountOfPeople = amountOfPeople
