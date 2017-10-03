@@ -18,9 +18,17 @@ class PartyTableViewController: UITableViewController {
     //MARK: Actions
     @IBAction func unwindToPartyList(sender: UIStoryboardSegue) {
         if let sourceViewController = sender.source as? HomeViewController, let party = sourceViewController.party {
-            let newIndexPath = IndexPath(row: parties.count, section: 0)
-            parties.append(party)
-            tableView.insertRows(at: [newIndexPath], with: .automatic)
+            
+            if let selectedIndexPath = tableView.indexPathForSelectedRow {
+                parties[selectedIndexPath.row] = party
+                tableView.reloadRows(at: [selectedIndexPath], with: .none)
+                
+            } else {
+                let newIndexPath = IndexPath(row: parties.count, section: 0)
+                parties.append(party)
+                tableView.insertRows(at: [newIndexPath], with: .automatic)
+            }
+           
         }
     }
     

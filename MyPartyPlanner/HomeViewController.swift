@@ -125,7 +125,15 @@ class HomeViewController: UIViewController, UITextFieldDelegate, UINavigationCon
         let name: String = partyNameTextField.text!
         let subtitle: String = subtitleTextField.text
         let location: String = locationTextField.text!
-        let randDate: Date = dateFormatter.date(from: dateTextField.text!)!
+        
+        var randDate: Date
+        
+        if (dateTextField.text! == "") {
+            randDate = Date()
+        } else {
+            randDate = dateFormatter.date(from: dateTextField.text!)!
+        }
+        
         let amountOfPeople: Int = Int(memberCountLabel.text!)!
         let randCoordinateLocation = CLLocationCoordinate2DMake(43.390297, -80.403226) //Points at Conestoga College
 
