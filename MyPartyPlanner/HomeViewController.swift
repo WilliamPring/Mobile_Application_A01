@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import os.log
 
-class HomeViewController: UIViewController, UITextFieldDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+class HomeViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
 
     //MARK: Properties
     
@@ -35,6 +35,22 @@ class HomeViewController: UIViewController, UITextFieldDelegate, UINavigationCon
     @IBAction func stepperValueChanged(_ sender: UIStepper) {
         memberCountLabel.text = Int(sender.value).description
     }
+    
+    @IBAction func cancel(_ sender: UIBarButtonItem) {
+        //Controller is dismissed in two different ways due to style of presentation (modal or push)
+        //Show if detail scene was presenting by user tapping on the party item
+        self.navigationController?.popViewController(animated: true) //Pop off the Navigation stack
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @IBAction func nextCreatePartyViewButtonPressed(_ sender: UIButton) {
+        self.performSegue(withIdentifier: "CreatePartyViewSegue", sender: self)
+    }
+    
+    @IBAction func PartyDetailViewButtonPressed(_ sender: UIButton) {
+        self.performSegue(withIdentifier: "PartyDetailViewSegue", sender: self)
+    }
+    
     
     
     func CreateLocationPicker() {
@@ -101,16 +117,8 @@ class HomeViewController: UIViewController, UITextFieldDelegate, UINavigationCon
     }
     
     
-    //MARK: Navigation
+    //MARK: Override Functions
     
-    
-    @IBAction func cancel(_ sender: UIBarButtonItem) {
-        //Controller is dismissed in two different ways due to style of presentation (modal or push)
-        //Show if detail scene was presenting by user tapping on the party item
-        self.navigationController?.popViewController(animated: true) //Pop off the Navigation stack
-        dismiss(animated: true, completion: nil)
-    }
-   
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
         
@@ -152,18 +160,10 @@ class HomeViewController: UIViewController, UITextFieldDelegate, UINavigationCon
         party?.location = location
     }
     
-    
-    @IBAction func nextCreatePartyViewButtonPressed(_ sender: UIButton) {
-        self.performSegue(withIdentifier: "CreatePartyViewSegue", sender: self)
-    }
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view, typically from a nib.
-        
-        self.partyNameTextField.delegate = self
         
         //Date Picker
         CreateDatePicker()
@@ -193,30 +193,46 @@ class HomeViewController: UIViewController, UITextFieldDelegate, UINavigationCon
         subtitleTextField.clipsToBounds = true
         
         //Keyboard for name and subtitle
-        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard)))
+        self.partyNameTextField.delegate = self
+        self.subtitleTextField.delegate  = self
         
+        //Prevent empty string beign assigned to name of party event
+        updateSaveButton()
     }
-    
-    func dismissKeyboard() {
-        partyNameTextField.resignFirstResponder()
-    }
-    
-    func textFieldShouldReturn(partyNameTextField: UITextField) -> Bool {
-        partyNameTextField.resignFirstResponder()
-        return true 
-    }
-
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
     
-    @IBAction func PartyDetailViewButtonPressed(_ sender: UIButton) {
-        self.performSegue(withIdentifier: "PartyDetailViewSegue", sender: self)
+    
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true 
     }
     
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if(text == "\n") {
+            view.endEditing(true)
+            return false
+        } else {
+            return true
+        }
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        saveButton.isEnabled = false
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        updateSaveButton()
+    }
+    
+    func updateSaveButton() {
+        let textStr = partyNameTextField.text?.trimmingCharacters(in: .whitespaces) ?? ""
+        saveButton.isEnabled = !textStr.isEmpty
+    }
     
     //PICKER VIEW related methods
     
