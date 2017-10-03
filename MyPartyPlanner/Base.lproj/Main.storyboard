@@ -230,6 +230,7 @@
                         <outlet property="saveButton" destination="O6n-zO-hWJ" id="AMc-1c-HXN"/>
                         <outlet property="stepperField" destination="Xjd-Rb-U0J" id="am6-oc-o7w"/>
                         <outlet property="subtitleTextField" destination="egV-JK-cBq" id="lxc-y7-fzx"/>
+                        <outlet property="switchField" destination="1D7-uv-s7d" id="aWp-ef-ys7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dQg-Aw-crd" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -39,11 +39,10 @@ class PartyTableViewController: UITableViewController {
         
         //Create some sample data to preload for the user to see
         let testDate: Date = Date()
-        let partyOne   = Party(title: "TEST_1", subtitle: "", location: "Kitchener", dateOfEvent: testDate, amountOfPeople: 10, coordinate: randCoordinateLocation)
-        let partyTwo   = Party(title: "TEST_2", subtitle: "", location: "Vancouver", dateOfEvent: testDate, amountOfPeople: 10, coordinate: randCoordinateLocation)
-        let partyThree = Party(title: "TEST_3", subtitle: "", location: "Toronto",   dateOfEvent: testDate, amountOfPeople: 10, coordinate: randCoordinateLocation)
+        let partyOne   = Party(title: "TEST_1", subtitle: "Test 1 Sample", location: "Kitchener", dateOfEvent: testDate, amountOfPeople: 10, coordinate: randCoordinateLocation, isPartyCoverActive: false)
+        let partyTwo   = Party(title: "TEST_2", subtitle: "Test 2 Sample", location: "Vancouver", dateOfEvent: testDate, amountOfPeople: 10, coordinate: randCoordinateLocation, isPartyCoverActive: true)
 
-        parties += [partyOne, partyTwo, partyThree] //Add party objects to the collection
+        parties += [partyOne, partyTwo] //Add party objects to the collection
     }
     
     override func viewDidLoad() {

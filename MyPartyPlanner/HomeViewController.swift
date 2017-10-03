@@ -27,6 +27,7 @@ class HomeViewController: UIViewController, UITextFieldDelegate, UINavigationCon
     @IBOutlet weak var memberCountLabel: UILabel!
     @IBOutlet weak var subtitleTextField: UITextView!
     @IBOutlet weak var stepperField: UIStepper!
+    @IBOutlet weak var switchField: UISwitch!
     
     let theDatePicker = UIDatePicker()
     let theLocationPicker = UIPickerView()
@@ -126,6 +127,7 @@ class HomeViewController: UIViewController, UITextFieldDelegate, UINavigationCon
         let subtitle: String = subtitleTextField.text
         let location: String = locationTextField.text!
         
+        //Date field
         var randDate: Date
         
         if (dateTextField.text! == "") {
@@ -134,10 +136,19 @@ class HomeViewController: UIViewController, UITextFieldDelegate, UINavigationCon
             randDate = dateFormatter.date(from: dateTextField.text!)!
         }
         
+        //Swith field
+        var switchVal: Bool
+        
+        if(switchField.isOn == true) {
+            switchVal = true
+        } else {
+            switchVal = false
+        }
+        
         let amountOfPeople: Int = Int(memberCountLabel.text!)!
         let randCoordinateLocation = CLLocationCoordinate2DMake(43.390297, -80.403226) //Points at Conestoga College
 
-        party = Party(title: name, subtitle: subtitle, location: location, dateOfEvent: randDate, amountOfPeople: amountOfPeople, coordinate: randCoordinateLocation)
+        party = Party(title: name, subtitle: subtitle, location: location, dateOfEvent: randDate, amountOfPeople: amountOfPeople, coordinate: randCoordinateLocation, isPartyCoverActive: switchVal)
         party?.location = location
     }
     
@@ -169,6 +180,7 @@ class HomeViewController: UIViewController, UITextFieldDelegate, UINavigationCon
             locationTextField.text  = party.location
             memberCountLabel.text   = String(party.amountOfPeople)
             subtitleTextField.text  = party.subtitle
+            switchField.isOn = party.isPartyCoverActive
             
             //Stepper value
             stepperField.value = Double(party.amountOfPeople)

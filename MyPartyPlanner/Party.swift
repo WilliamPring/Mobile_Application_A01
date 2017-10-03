@@ -13,10 +13,17 @@ import CoreLocation
 class Party : NSObject, MKAnnotation {
     
     //MARK: Properties (Custom)
-    var dateOfEvent: Date
-    var amountOfPeople: Int
     
     lazy var geocoder = CLGeocoder()
+
+    var dateOfEvent: Date
+    var amountOfPeople: Int
+    var isPartyCoverActive: Bool
+    
+    //Conforming to the MKAnnotation protocol
+    var title: String?
+    var subtitle: String?
+    var coordinate: CLLocationCoordinate2D
     
     var location: String {
     
@@ -39,19 +46,14 @@ class Party : NSObject, MKAnnotation {
     
     }
     
-    
-    //Conforming to the MKAnnotation protocol
-    var title: String?
-    var subtitle: String?
-    var coordinate: CLLocationCoordinate2D
-    
-    init(title: String, subtitle: String, location: String, dateOfEvent: Date, amountOfPeople: Int, coordinate: CLLocationCoordinate2D) {
+    init(title: String, subtitle: String, location: String, dateOfEvent: Date, amountOfPeople: Int, coordinate: CLLocationCoordinate2D, isPartyCoverActive: Bool) {
         self.title = title
         self.subtitle = subtitle
         self.location = location
         self.dateOfEvent = dateOfEvent
         self.amountOfPeople = amountOfPeople
         self.coordinate = coordinate
+        self.isPartyCoverActive = isPartyCoverActive
     }
     
     
