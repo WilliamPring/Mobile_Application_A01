@@ -6,6 +6,16 @@
 //  Copyright © 2017 Student. All rights reserved.
 //
 
+/*
+ Filename: PartyTableViewController.swift
+ By: Naween M, William P, Denys P
+ Assignment: Assignment 1 Mobile iOS
+ Date: October 2, 2017
+ Description: The MapViewController will help display also a SegmentedControl inside the MapView for users 
+ to switch which style they want to view the location pins. It also loads all the pins into the map from the
+ TableView, the Party objects 
+ */
+
 
 import UIKit
 import MapKit

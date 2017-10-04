@@ -6,6 +6,14 @@
 //  Copyright © 2017 Student. All rights reserved.
 //
 
+/*
+ Filename: PartyTableViewController.swift
+ By: Naween M, William P, Denys P
+ Assignment: Assignment 1 Mobile iOS
+ Date: October 2, 2017
+ Description: Responsible for handling the TableView, inserting new Party objects and deleting existing Party objects.
+ */
+
 import UIKit
 import MapKit
 import os.log

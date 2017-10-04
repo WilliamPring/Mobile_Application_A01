@@ -6,6 +6,16 @@
 //  Copyright © 2017 Student. All rights reserved.
 //
 
+/*
+    Filename: HomeViewController.swift
+    By: Naween M, William P, Denys P
+    Assignment: Assignment 1 Mobile iOS
+    Date: October 2, 2017
+    Description: Responsible for maintaining the View (CreatePartyViewController) outlets and actions. This handles
+    being able to create new Party objects to add to the TableView display. View also scales to different sized phones.
+ 
+ */
+
 import UIKit
 import MapKit
 import os.log

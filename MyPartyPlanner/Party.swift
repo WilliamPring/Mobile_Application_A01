@@ -6,6 +6,15 @@
 //  Copyright © 2017 Student. All rights reserved.
 //
 
+/*
+ Filename: PartyTableViewController.swift
+ By: Naween M, William P, Denys P
+ Assignment: Assignment 1 Mobile iOS
+ Date: October 2, 2017
+ Description: Details about the Party class that will show where the party is happening, number of attendees, name, description and etc. These
+ will be displayed in a formatted fashion using a TableView
+ */
+
 import UIKit
 import MapKit
 import CoreLocation
