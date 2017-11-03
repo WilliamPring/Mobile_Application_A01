@@ -24,26 +24,49 @@ class HomeViewController: UIViewController, UITextFieldDelegate, UITextViewDeleg
 
     //MARK: Properties
     
+    //Localized strings
+    let canVancouver: String   = NSLocalizedString("Canada, Vancouver", comment: "")
+    let canToronto:String      = NSLocalizedString("Canada, Toronto", comment: "")
+    let usaNewYork:String      = NSLocalizedString("USA, New York", comment: "")
+    let usaSeattle:String      = NSLocalizedString("USA, Seattle", comment: "")
+    let usaSanFrancisco:String = NSLocalizedString("USA, San Francisco", comment: "")
+    
     var party: Party?
-    var locationOptions = ["Canada, Vancouver", "Canada, Toronto", "USA, New York", "USA, Seattle", "USA, San Francisco"]
+    var locationOptions: [String] = []
     
     var selectedLocation: String = ""
     var currentRow = 0
     
+    //Global field
+    var mainField: AnyObject?
+    var theInnerViewStack: AnyObject?
+    
+    @IBOutlet weak var memberCountTextLabel: UILabel!
     @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var partyNameTextField: UITextField!
     @IBOutlet weak var dateTextField: UITextField!
     @IBOutlet weak var locationTextField: UITextField!
-    @IBOutlet weak var memberCountLabel: UILabel!
     @IBOutlet weak var subtitleTextField: UITextView!
     @IBOutlet weak var stepperField: UIStepper!
     @IBOutlet weak var switchField: UISwitch!
+    
+    //Stack view related items
+    @IBOutlet weak var outerStackView: UIStackView!
+    @IBOutlet weak var outerStackViewTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var innerTextViewStack: UIStackView!
+    
+    //Other Stack views (for the textfields)
+    @IBOutlet weak var nameStackView: UIStackView!
+    @IBOutlet weak var dateStackView: UIStackView!
+    @IBOutlet weak var locationStackView: UIStackView!
+    
+    var outerStackViewTopConstraintConstant: CGFloat = 10.0
     
     let theDatePicker = UIDatePicker()
     let theLocationPicker = UIPickerView()
     
     @IBAction func stepperValueChanged(_ sender: UIStepper) {
-        memberCountLabel.text = Int(sender.value).description
+        memberCountTextLabel.text = Int(sender.value).description
     }
     
     @IBAction func cancel(_ sender: UIBarButtonItem) {
@@ -83,6 +106,7 @@ class HomeViewController: UIViewController, UITextFieldDelegate, UITextViewDeleg
         
         locationTextField.inputAccessoryView = toolbar
         locationTextField.inputView = theLocationPicker
+        locationTextField.delegate  = self
     }
     
     
@@ -107,6 +131,7 @@ class HomeViewController: UIViewController, UITextFieldDelegate, UITextViewDeleg
         //Assign to the original date picker (which is actually a text field on the View)
         dateTextField.inputAccessoryView = toolbar
         dateTextField.inputView = theDatePicker
+        dateTextField.delegate  = self;
     }
     
     func SetLocationTextField() {
@@ -114,7 +139,15 @@ class HomeViewController: UIViewController, UITextFieldDelegate, UITextViewDeleg
         locationTextField.text = locationOptions[currentRow]
         
         self.view.endEditing(true)
+        
+        self.view.layoutIfNeeded()
+        
+        UIView.animate(withDuration: 0.5, animations: {
+            self.outerStackViewTopConstraint.constant = self.outerStackViewTopConstraintConstant
+            self.view.layoutIfNeeded()
+        })
     }
+    
     
     func SetDateTextField() {
         //Format the date (Get rid of the timestamp when displaying the date value on the text field)
@@ -124,11 +157,19 @@ class HomeViewController: UIViewController, UITextFieldDelegate, UITextViewDeleg
         dateTextField.text = theDateFormatter.string(from: theDatePicker.date)
             
         self.view.endEditing(true)
+        
+        self.view.layoutIfNeeded()
+        
+        UIView.animate(withDuration: 0.5, animations: {
+            self.outerStackViewTopConstraint.constant = self.outerStackViewTopConstraintConstant
+            self.view.layoutIfNeeded()
+        })
     }
     
     
-    //MARK: Override Functions
-    
+    //
+    //MARK: Override Functionss
+    //
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
         
@@ -163,17 +204,80 @@ class HomeViewController: UIViewController, UITextFieldDelegate, UITextViewDeleg
             switchVal = false
         }
         
-        let amountOfPeople: Int = Int(memberCountLabel.text!)!
+        let amountOfPeople: Int = Int(memberCountTextLabel.text!)!
         let randCoordinateLocation = CLLocationCoordinate2DMake(43.390297, -80.403226) //Points at Conestoga College
-
-        party = Party(title: name, subtitle: subtitle, location: location, dateOfEvent: randDate, amountOfPeople: amountOfPeople, coordinate: randCoordinateLocation, isPartyCoverActive: switchVal)
+        
+        //Construct the new party object based on the field values
+        party = Party(title: name,
+                      subtitle: subtitle,
+                      location: location,
+                      dateOfEvent: randDate,
+                      amountOfPeople: amountOfPeople,
+                      coordinate: randCoordinateLocation,
+                      isPartyCoverActive: switchVal)
+        
+        //Set again afterwards to extrapolate geocode related information about the location
         party?.location = location
+    }
+    
+    
+    
+    func keyboardWillShow(notification: NSNotification) {
+        
+        if let info = notification.userInfo {
+            let rect: CGRect = info["UIKeyboardFrameEndUserInfoKey"] as! CGRect //The keyboard dimensions
+            //let space: CGFloat = 20.0 //Arbitrary gap between keyboard and textview
+            
+            //Find our target Y
+            let targetY = view.frame.size.height - rect.height - 20 - (mainField?.frame.size.height)!
+            
+            //Find out where the stackview is relative to the frame
+            let textViewY = outerStackView.frame.origin.y + (theInnerViewStack?.frame.origin.y)! + (mainField?.frame.origin.y)!
+            
+            let difference = targetY - textViewY
+            
+            let targetOffsetForTopConstraint = outerStackViewTopConstraint.constant + difference
+            
+            self.view.layoutIfNeeded()
+            
+            UIView.animate(withDuration: 0.25, animations: {
+                self.outerStackViewTopConstraint.constant = targetOffsetForTopConstraint
+                self.view.layoutIfNeeded()
+            })
+        
+        }
+    }
+    
+    
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        partyNameTextField.resignFirstResponder()
+        dateTextField.resignFirstResponder()
+        locationTextField.resignFirstResponder()
+        subtitleTextField.resignFirstResponder()
+
+        self.view.layoutIfNeeded()
+        
+        UIView.animate(withDuration: 0.5, animations: {
+            self.outerStackViewTopConstraint.constant = self.outerStackViewTopConstraintConstant
+            self.view.layoutIfNeeded()
+        })
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view, typically from a nib.
+        
+        //Listen for the keyboard
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
+        
+        //Location Array
+        locationOptions.append(canVancouver)
+        locationOptions.append(canToronto)
+        locationOptions.append(usaNewYork)
+        locationOptions.append(usaSeattle)
+        locationOptions.append(usaSanFrancisco)
         
         //Date Picker
         CreateDatePicker()
@@ -185,11 +289,12 @@ class HomeViewController: UIViewController, UITextFieldDelegate, UITextViewDeleg
             let theDateFormatter = DateFormatter()
             theDateFormatter.dateFormat = "yyyy-MM-dd"
             
+            navigationItem.title    = party.title
             partyNameTextField.text = party.title
             dateTextField.text = theDateFormatter.string(from: party.dateOfEvent)
-            locationTextField.text  = party.location
-            memberCountLabel.text   = String(party.amountOfPeople)
-            subtitleTextField.text  = party.subtitle
+            locationTextField.text    = party.location
+            memberCountTextLabel.text = String(party.amountOfPeople)
+            subtitleTextField.text    = party.subtitle
             switchField.isOn = party.isPartyCoverActive
             
             //Stepper value
@@ -206,7 +311,7 @@ class HomeViewController: UIViewController, UITextFieldDelegate, UITextViewDeleg
         self.partyNameTextField.delegate = self
         self.subtitleTextField.delegate  = self
         
-        //Prevent empty string beign assigned to name of party event
+        //Prevent empty string from being assigned to name of party event
         updateSaveButton()
     }
     
@@ -219,20 +324,58 @@ class HomeViewController: UIViewController, UITextFieldDelegate, UITextViewDeleg
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
-        return true 
+        
+        self.view.layoutIfNeeded()
+        
+        UIView.animate(withDuration: 0.5, animations: {
+            self.outerStackViewTopConstraint.constant = self.outerStackViewTopConstraintConstant
+            self.view.layoutIfNeeded()
+        })
+        
+        return true
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if(text == "\n") {
             view.endEditing(true)
+            
+            self.view.layoutIfNeeded()
+            
+            UIView.animate(withDuration: 0.5, animations: {
+                self.outerStackViewTopConstraint.constant = self.outerStackViewTopConstraintConstant
+                self.view.layoutIfNeeded()
+            })
+            
             return false
         } else {
             return true
         }
     }
     
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        mainField = textView
+        theInnerViewStack = innerTextViewStack
+    }
+    
     func textFieldDidBeginEditing(_ textField: UITextField) {
         saveButton.isEnabled = false
+        mainField = textField
+        
+        switch textField.tag
+        {
+            case 0:
+                theInnerViewStack = nameStackView
+            
+            case 1:
+                theInnerViewStack = dateStackView
+            
+            case 2:
+                theInnerViewStack = locationStackView
+            
+            default:
+                fatalError("Textfield tag was not recognized")
+        }
+        
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {

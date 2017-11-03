@@ -73,8 +73,11 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         view = mapView
         
         //Template based off Igor's sample code provided
+        let standardString:String  = NSLocalizedString("Standard", comment: "Standard Map View")
+        let satelliteString:String = NSLocalizedString("Satellite", comment: "Satellite Map View")
+        let hybridString:String    = NSLocalizedString("Hybrid", comment: "Hybrid Map View")
         
-        let segmentedControl = UISegmentedControl(items: ["Standard", "Hybrid", "Satellite"])
+        let segmentedControl = UISegmentedControl(items: [standardString, satelliteString, hybridString])
         segmentedControl.backgroundColor = UIColor.white.withAlphaComponent(0.5)
         segmentedControl.selectedSegmentIndex = 0
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false

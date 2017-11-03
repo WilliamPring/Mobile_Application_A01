@@ -20,10 +20,14 @@ import os.log
 
 class PartyTableViewController: UITableViewController {
     
+    //
     //MARK: Properties
+    //
     var parties = [Party]()
     
+    //
     //MARK: Actions
+    //
     @IBAction func unwindToPartyList(sender: UIStoryboardSegue) {
         if let sourceViewController = sender.source as? HomeViewController, let party = sourceViewController.party {
             
@@ -40,24 +44,37 @@ class PartyTableViewController: UITableViewController {
         }
     }
     
+    //
     //MARK: Private Methods
+    //
     private func loadAllParties() {
         
         let randCoordinateLocation = CLLocationCoordinate2DMake(43.390297, -80.403226) //Points at Conestoga College
         
         //Create some sample data to preload for the user to see
         let testDate: Date = Date()
-        let partyOne   = Party(title: "TEST_1", subtitle: "Test 1 Sample", location: "Kitchener", dateOfEvent: testDate, amountOfPeople: 10, coordinate: randCoordinateLocation, isPartyCoverActive: false)
-        let partyTwo   = Party(title: "TEST_2", subtitle: "Test 2 Sample", location: "Vancouver", dateOfEvent: testDate, amountOfPeople: 10, coordinate: randCoordinateLocation, isPartyCoverActive: true)
+        
+        let partyOne   = Party(title: "TEST_1",
+                               subtitle: "Test 1 Sample",
+                               location: "Kitchener",
+                               dateOfEvent: testDate,
+                               amountOfPeople: 10,
+                               coordinate: randCoordinateLocation,
+                               isPartyCoverActive: false)
+        
+        let partyTwo   = Party(title: "TEST_2",
+                               subtitle: "Test 2 Sample",
+                               location: "Vancouver",
+                               dateOfEvent: testDate,
+                               amountOfPeople: 10,
+                               coordinate: randCoordinateLocation,
+                               isPartyCoverActive: true)
 
         parties += [partyOne, partyTwo] //Add party objects to the collection
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
         
         self.navigationItem.leftBarButtonItem = self.editButtonItem //Handles deletion of cells in that TableView
         
@@ -69,28 +86,25 @@ class PartyTableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    // MARK: - Table view data source
-
+    //
+    // MARK: - Table view data source (Mandatory)
+    //
     override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 1
+        return 1 // Return the number of sections
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return parties.count
-    }
+        return parties.count // Return the number of rows 
 
+    }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        let cellIdentifier: String = "PartyTableViewCell"
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! PartyTableViewCell
+        //Called for each cell separately
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PartyTableViewCell", for: indexPath)
         let party = parties[indexPath.row]
         
-        cell.nameLabel.text = party.title
-
-        // Configure the cell...
+        cell.textLabel?.text = party.title
+        cell.detailTextLabel?.text = party.subtitle
 
         return cell
     }
@@ -99,21 +113,18 @@ class PartyTableViewController: UITableViewController {
     
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
+        return true // Return false if you do not want the specified item to be editable.
     }
  
 
     
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        // Delete the row from the data source
         if editingStyle == .delete {
-            // Delete the row from the data source
             parties.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+        }
     }
     
 
