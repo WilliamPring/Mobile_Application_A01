@@ -279,6 +279,8 @@ class HomeViewController: UIViewController, UITextFieldDelegate, UITextViewDeleg
         locationOptions.append(usaSeattle)
         locationOptions.append(usaSanFrancisco)
         
+        memberCountTextLabel.text = "0"
+        
         //Date Picker
         CreateDatePicker()
         

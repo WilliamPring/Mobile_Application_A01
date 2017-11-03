@@ -5,3 +5,28 @@
   Created by Student on 2017-11-01.
   Copyright © 2017 Student. All rights reserved.
 */
+
+
+/* Hybrid Map View */
+"Hybrid" = "гибридный";
+
+/* Satellite Map View */
+"Satellite" = "спутник";
+
+/* Standard Map View */
+"Standard" = "стандарт";
+
+/* No comment provided by engineer. */
+"Canada, Toronto" = "Канада, Торонто";
+
+/* No comment provided by engineer. */
+"Canada, Vancouver" = "Канада, Ванкувер";
+
+/* No comment provided by engineer. */
+"USA, New York" = "США, Нью Йорк";
+
+/* No comment provided by engineer. */
+"USA, San Francisco" = "США, Сан Франциско";
+
+/* No comment provided by engineer. */
+"USA, Seattle" = "США, Сиэтл";

@@ -1,48 +1,48 @@
 
 /* Class = "UILabel"; text = "Title"; ObjectID = "3Y8-pR-6Ob"; */
-"3Y8-pR-6Ob.text" = "Title";
+"3Y8-pR-6Ob.text" = "Заглавие";
 
 /* Class = "UINavigationItem"; title = "Parties"; ObjectID = "4pC-wa-0kc"; */
-"4pC-wa-0kc.title" = "Parties";
+"4pC-wa-0kc.title" = "Вечеринки";
 
 /* Class = "UITextField"; placeholder = "Enter party name"; ObjectID = "4qK-i5-bZP"; */
-"4qK-i5-bZP.placeholder" = "Enter party name";
+"4qK-i5-bZP.placeholder" = "Введите название вечеринки";
 
 /* Class = "UITabBarItem"; title = "Map"; ObjectID = "96e-wx-ZZC"; */
-"96e-wx-ZZC.title" = "Map";
+"96e-wx-ZZC.title" = "Карта";
 
 /* Class = "UITextField"; placeholder = "Select location of event"; ObjectID = "DRb-A1-x3H"; */
-"DRb-A1-x3H.placeholder" = "Select location of event";
+"DRb-A1-x3H.placeholder" = "Выберите место вечеринки";
 
 /* Class = "UIViewController"; title = "CreatePartyViewController"; ObjectID = "E9d-zj-thb"; */
 "E9d-zj-thb.title" = "CreatePartyViewController";
 
 /* Class = "UILabel"; text = "Members:"; ObjectID = "NxU-yi-vF0"; */
-"NxU-yi-vF0.text" = "Members:";
+"NxU-yi-vF0.text" = "Участники:";
 
 /* Class = "UIBarButtonItem"; title = "Save"; ObjectID = "O6n-zO-hWJ"; */
-"O6n-zO-hWJ.title" = "Save";
+"O6n-zO-hWJ.title" = "Сохранить";
 
 /* Class = "UILabel"; text = "Location"; ObjectID = "OCC-RM-2h0"; */
-"OCC-RM-2h0.text" = "Location";
+"OCC-RM-2h0.text" = "Город";
 
 /* Class = "UILabel"; text = "Party Description"; ObjectID = "PSD-7K-2if"; */
-"PSD-7K-2if.text" = "Party Description";
+"PSD-7K-2if.text" = "Про вечеринку";
 
 /* Class = "UILabel"; text = "Name"; ObjectID = "WmA-OI-AWZ"; */
-"WmA-OI-AWZ.text" = "Name";
+"WmA-OI-AWZ.text" = "Название";
 
 /* Class = "UIBarButtonItem"; title = "Cancel"; ObjectID = "aoa-Pc-I36"; */
-"aoa-Pc-I36.title" = "Cancel";
+"aoa-Pc-I36.title" = "Отменить";
 
 /* Class = "UILabel"; text = "Cover fee for party?"; ObjectID = "hG8-q6-D4a"; */
-"hG8-q6-D4a.text" = "Cover fee for party?";
+"hG8-q6-D4a.text" = "Платная вечеринка?";
 
 /* Class = "UITabBarItem"; title = "Parties"; ObjectID = "mDt-a2-XIw"; */
-"mDt-a2-XIw.title" = "Parties";
+"mDt-a2-XIw.title" = "Вечеринки";
 
 /* Class = "UIBarButtonItem"; title = "Add"; ObjectID = "mwB-ht-EBE"; */
-"mwB-ht-EBE.title" = "Add";
+"mwB-ht-EBE.title" = "Добавить";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "nCk-qD-d0f"; */
 "nCk-qD-d0f.text" = "Label";
@@ -51,10 +51,10 @@
 "ocY-hC-fTp.text" = "Subtitle";
 
 /* Class = "UINavigationItem"; title = "New Party"; ObjectID = "pen-1f-jU6"; */
-"pen-1f-jU6.title" = "New Party";
+"pen-1f-jU6.title" = "Новая вечеринка";
 
 /* Class = "UITextField"; placeholder = "Select date of event"; ObjectID = "sHQ-WD-l05"; */
-"sHQ-WD-l05.placeholder" = "Select date of event";
+"sHQ-WD-l05.placeholder" = "Выберите дату вечеринки";
 
 /* Class = "UILabel"; text = "Date"; ObjectID = "yBW-h7-c7B"; */
-"yBW-h7-c7B.text" = "Date";
+"yBW-h7-c7B.text" = "Дата";
