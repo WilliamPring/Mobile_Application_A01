@@ -9,8 +9,8 @@
 /*
     Filename: HomeViewController.swift
     By: Naween M, William P, Denys P
-    Assignment: Assignment 1 Mobile iOS
-    Date: October 2, 2017
+    Assignment: Assignment 2 Mobile iOS
+    Date: December 2, 2017
     Description: Responsible for maintaining the View (CreatePartyViewController) outlets and actions. This handles
     being able to create new Party objects to add to the TableView display. View also scales to different sized phones.
  
@@ -23,6 +23,7 @@ import os.log
 class HomeViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
 
     //MARK: Properties
+    let dateFormatter = DateFormatter()
     
     //Localized strings
     let canVancouver: String   = NSLocalizedString("Canada, Vancouver", comment: "")
@@ -178,10 +179,6 @@ class HomeViewController: UIViewController, UITextFieldDelegate, UITextViewDeleg
             return
         }
         
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        dateFormatter.timeZone = TimeZone(abbreviation: "GMT+0:00")
-        
         let name: String = partyNameTextField.text!
         let subtitle: String = subtitleTextField.text
         let location: String = locationTextField.text!
@@ -205,7 +202,12 @@ class HomeViewController: UIViewController, UITextFieldDelegate, UITextViewDeleg
         }
         
         let amountOfPeople: Int = Int(memberCountTextLabel.text!)!
-        let randCoordinateLocation = CLLocationCoordinate2DMake(43.390297, -80.403226) //Points at Conestoga College
+        let randCoordinateLocation = CLLocationCoordinate2DMake(43.390297, -80.403226) //Points at Conestoga College (Default)
+
+        //
+        //Make REST API call to Google Geocodings
+        //GET the proper coordinates for the city chosen
+        //
         
         //Construct the new party object based on the field values
         party = Party(title: name,
@@ -216,8 +218,7 @@ class HomeViewController: UIViewController, UITextFieldDelegate, UITextViewDeleg
                       coordinate: randCoordinateLocation,
                       isPartyCoverActive: switchVal)
         
-        //Set again afterwards to extrapolate geocode related information about the location
-        party?.location = location
+        getGeoCode(party: party!)
     }
     
     
@@ -226,7 +227,6 @@ class HomeViewController: UIViewController, UITextFieldDelegate, UITextViewDeleg
         
         if let info = notification.userInfo {
             let rect: CGRect = info["UIKeyboardFrameEndUserInfoKey"] as! CGRect //The keyboard dimensions
-            //let space: CGFloat = 20.0 //Arbitrary gap between keyboard and textview
             
             //Find our target Y
             let targetY = view.frame.size.height - rect.height - 20 - (mainField?.frame.size.height)!
@@ -249,7 +249,7 @@ class HomeViewController: UIViewController, UITextFieldDelegate, UITextViewDeleg
     }
     
     
-    
+    //Resign the first responder (keyboard) when done with the control
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         partyNameTextField.resignFirstResponder()
         dateTextField.resignFirstResponder()
@@ -264,21 +264,21 @@ class HomeViewController: UIViewController, UITextFieldDelegate, UITextViewDeleg
         })
     }
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view, typically from a nib.
+        //Date related
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        dateFormatter.timeZone   = TimeZone(abbreviation: "GMT+0:00")
         
         //Listen for the keyboard
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
         
-        //Location Array
-        locationOptions.append(canVancouver)
-        locationOptions.append(canToronto)
-        locationOptions.append(usaNewYork)
-        locationOptions.append(usaSeattle)
-        locationOptions.append(usaSanFrancisco)
+        //Location Array - Add all available cities
+        locationOptions += [canVancouver, canToronto, usaNewYork, usaSeattle, usaSanFrancisco]
         
+        //Default value of members in a new party
         memberCountTextLabel.text = "0"
         
         //Date Picker
@@ -287,20 +287,16 @@ class HomeViewController: UIViewController, UITextFieldDelegate, UITextViewDeleg
         //Location Picker
         CreateLocationPicker()
         
+        //Load contents of the Party Object if an existing one was selected from the TableViewController
         if let party = party {
-            let theDateFormatter = DateFormatter()
-            theDateFormatter.dateFormat = "yyyy-MM-dd"
-            
-            navigationItem.title    = party.title
-            partyNameTextField.text = party.title
-            dateTextField.text = theDateFormatter.string(from: party.dateOfEvent)
+            navigationItem.title      = party.title
+            partyNameTextField.text   = party.title
+            dateTextField.text        = dateFormatter.string(from: party.dateOfEvent)
             locationTextField.text    = party.location
             memberCountTextLabel.text = String(party.amountOfPeople)
             subtitleTextField.text    = party.subtitle
-            switchField.isOn = party.isPartyCoverActive
-            
-            //Stepper value
-            stepperField.value = Double(party.amountOfPeople)
+            switchField.isOn          = party.isPartyCoverActive //Switch
+            stepperField.value        = Double(party.amountOfPeople) //Stepper
         }
         
         //Text view border
@@ -319,9 +315,7 @@ class HomeViewController: UIViewController, UITextFieldDelegate, UITextViewDeleg
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
-    
     
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -336,6 +330,7 @@ class HomeViewController: UIViewController, UITextFieldDelegate, UITextViewDeleg
         
         return true
     }
+    
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if(text == "\n") {
@@ -354,11 +349,16 @@ class HomeViewController: UIViewController, UITextFieldDelegate, UITextViewDeleg
         }
     }
     
+    
+    //Determining how much the control should shift
+    //so that the keyboard does not unintentionally block content
     func textViewDidBeginEditing(_ textView: UITextView) {
         mainField = textView
         theInnerViewStack = innerTextViewStack
     }
     
+    //Depending on the control selected, this will determine how much the layout will shift
+    //so that the keyboard does not unintentionally block content
     func textFieldDidBeginEditing(_ textField: UITextField) {
         saveButton.isEnabled = false
         mainField = textField
@@ -389,8 +389,11 @@ class HomeViewController: UIViewController, UITextFieldDelegate, UITextViewDeleg
         saveButton.isEnabled = !textStr.isEmpty
     }
     
-    //PICKER VIEW related methods
     
+    
+    //
+    //PICKER VIEW related methods
+    //
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return locationOptions.count
     }
@@ -407,6 +410,39 @@ class HomeViewController: UIViewController, UITextFieldDelegate, UITextViewDeleg
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
+    
+    
+    
+    func getGeoCode(party: Party) {
+        
+        //var json: Any?
+        let url = GeoCodeAPI.getGeoCodeGoogleURL(cityName: party.location)
+        let request = URLRequest(url: url)
+        let task    = GeoCodeAPI.session.dataTask(with: request) { (data, response, error) -> Void in
+            //Parse JSON response object 
+            do {
+                if let json = try JSONSerialization.jsonObject(with: data!) as? [String: Any],
+                   let results  = json["results"] as? [[String: Any]],
+                   let geometry = results[0]["geometry"] as? [String: Any],
+                   let location = geometry["location"]   as? [String: Any] {
+                    
+                    let longitude = location["lng"] as? Double
+                    let latitude  = location["lat"] as? Double
+                    
+                    party.coordinate = CLLocationCoordinate2DMake(Double(latitude!), Double(longitude!))
 
+                }
+                
+            } catch {
+                print(error)
+            }
+            
+        }
+        
+        task.resume()
+    }
+
+    
+    
 }
 

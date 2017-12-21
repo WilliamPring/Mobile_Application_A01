@@ -9,8 +9,8 @@
 /*
  Filename: PartyTableViewController.swift
  By: Naween M, William P, Denys P
- Assignment: Assignment 1 Mobile iOS
- Date: October 2, 2017
+ Assignment: Assignment 2 Mobile iOS
+ Date: December 2, 2017
  Description: Details about the Party class that will show where the party is happening, number of attendees, name, description and etc. These
  will be displayed in a formatted fashion using a TableView
  */
@@ -34,7 +34,7 @@ class Party : NSObject, MKAnnotation {
     var subtitle: String?
     var coordinate: CLLocationCoordinate2D
     
-    var location: String {
+    var location: String /* {
     
         willSet{
             //Forward Geocoding 
@@ -52,8 +52,7 @@ class Party : NSObject, MKAnnotation {
                 }
             }
         }
-    
-    }
+    } */
     
     init(title: String, subtitle: String, location: String, dateOfEvent: Date, amountOfPeople: Int, coordinate: CLLocationCoordinate2D, isPartyCoverActive: Bool) {
         self.title = title

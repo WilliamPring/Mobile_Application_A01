@@ -9,8 +9,8 @@
 /*
  Filename: PartyTableViewController.swift
  By: Naween M, William P, Denys P
- Assignment: Assignment 1 Mobile iOS
- Date: October 2, 2017
+ Assignment: Assignment 2 Mobile iOS
+ Date: December 2, 2017
  Description: Custom cell that should be display in the TableView, it's only going to show the Party event name 
  */
 

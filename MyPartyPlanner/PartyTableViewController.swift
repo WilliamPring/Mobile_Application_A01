@@ -9,8 +9,8 @@
 /*
  Filename: PartyTableViewController.swift
  By: Naween M, William P, Denys P
- Assignment: Assignment 1 Mobile iOS
- Date: October 2, 2017
+ Assignment: Assignment 2 Mobile iOS
+ Date: December 2, 2017
  Description: Responsible for handling the TableView, inserting new Party objects and deleting existing Party objects.
  */
 
@@ -61,16 +61,8 @@ class PartyTableViewController: UITableViewController {
                                amountOfPeople: 10,
                                coordinate: randCoordinateLocation,
                                isPartyCoverActive: false)
-        
-        let partyTwo   = Party(title: "TEST_2",
-                               subtitle: "Test 2 Sample",
-                               location: "Vancouver",
-                               dateOfEvent: testDate,
-                               amountOfPeople: 10,
-                               coordinate: randCoordinateLocation,
-                               isPartyCoverActive: true)
 
-        parties += [partyOne, partyTwo] //Add party objects to the collection
+        parties += [partyOne] //Add party objects to the collection
     }
     
     override func viewDidLoad() {
@@ -181,9 +173,6 @@ class PartyTableViewController: UITableViewController {
             default:
                 fatalError("Unexpected Segue Identifier error")
         }
-        
-        
-        
     }
  
 
