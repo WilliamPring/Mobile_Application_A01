@@ -22,7 +22,7 @@ import MapKit
 import CoreLocation
 import CoreData
 
-class MapViewController: UIViewController, MKMapViewDelegate {
+class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
     //MARK: Properties
     lazy var allAnnotations: [MKAnnotation]? = nil
@@ -33,21 +33,20 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }()
 
     var mapView : MKMapView!
+    let manager = CLLocationManager()
     
     //MARK: Methods
     
     func mapTypeChange(_ segControl: UISegmentedControl) {
-        var _ : Int = 0
-        
         switch segControl.selectedSegmentIndex {
-        case 0:
-            mapView.mapType = .standard
-        case 1:
-            mapView.mapType = .hybrid
-        case 2:
-            mapView.mapType = .satellite
-        default:
-            break
+            case 0:
+                mapView.mapType = .standard
+            case 1:
+                mapView.mapType = .hybrid
+            case 2:
+                mapView.mapType = .satellite
+            default:
+                break
         }
         
     }
@@ -73,17 +72,19 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                                               longitude: party.longitude,
                                               info: party.subtitle!)
                     theAcceptedAnnotation.append(pin)
-                    
-                    
-                    /*
-                    let annView:MKAnnotationView = MKPinAnnotationView(annotation: pin, reuseIdentifier: "Party")
-                    annView.canShowCallout = true
-                    
-                    let btn = UIButton(type: .detailDisclosure)
-                    annView.rightCalloutAccessoryView = btn */
-                    
                     isAddAnnotations = true
                 }
+            }
+            
+            if currLocation != nil {
+                let currAnnotation:MKParty = MKParty(title: "Your Location",
+                                                     latitude:  currLocation!.coordinate.latitude,
+                                                     longitude: currLocation!.coordinate.longitude,
+                                                     info: "")
+                
+                mapView.addAnnotation(currAnnotation)
+                manager.stopUpdatingLocation()
+                isAddAnnotations = true
             }
             
             if isAddAnnotations == true {
@@ -95,11 +96,41 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             fatalError("Failed to fetch employees: \(error)")
         }
     }
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        //Do any additional setup after loading the view, typically from a nib.
         loadView()
+        
+        //Ask for Authorisation from the User.
+        manager.delegate = self
+        manager.desiredAccuracy = kCLLocationAccuracyKilometer
+        
+        let authorizationStatus = CLLocationManager.authorizationStatus()
+        
+        if (authorizationStatus == CLAuthorizationStatus.notDetermined) {
+            manager.requestWhenInUseAuthorization()
+            
+        } else if (authorizationStatus == CLAuthorizationStatus.authorizedWhenInUse) {
+            manager.startUpdatingLocation()
+        }
+    }
+    
+    func manager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        if (status == CLAuthorizationStatus.authorizedWhenInUse) {
+            manager.startUpdatingLocation()
+        }
+    }
+    
+    var currLocation:CLLocation?
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        self.currLocation = locations[0]
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print("Failed to find user's location: \(error.localizedDescription)")
     }
     
     override func loadView() {
@@ -144,6 +175,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let identifier = "Party"
+        var isUserLocation:Bool = false
         
         if annotation is MKParty {
             var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
@@ -152,22 +184,32 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
                 annotationView!.canShowCallout = true
                 
-                //Add detail button
-                let btn = UIButton(type: .detailDisclosure)
-                annotationView!.rightCalloutAccessoryView = btn
+                if (annotation as! MKParty).title == "Your Location" {
+                    isUserLocation = true
+                }
                 
-                //Change tint colour
-                (annotationView as! MKPinAnnotationView).pinTintColor = UIColor.brown
+                if isUserLocation == true {
+                    (annotationView as! MKPinAnnotationView).pinTintColor = UIColor.red
+                    
+                    
+                } else {
+                    //Add detail button
+                    let btn = UIButton(type: .detailDisclosure)
+                    annotationView!.rightCalloutAccessoryView = btn
+                    
+                    //Change tint colour
+                    (annotationView as! MKPinAnnotationView).pinTintColor = UIColor.brown
+                    
+                    //Set image
+                    let imageView = UIImageView(frame: CGRect(x: 0, y: 0,
+                                                              width: annotationView!.frame.height,
+                                                              height: annotationView!.frame.height))
+                    
+                    imageView.image = UIImage(named: "party_icon")
+                    imageView.contentMode = .scaleAspectFit
+                    annotationView!.leftCalloutAccessoryView = imageView
+                }
                 
-                //Set image
-                let imageView = UIImageView(frame: CGRect(x: 0, y: 0,
-                                                          width: annotationView!.frame.height,
-                                                          height: annotationView!.frame.height))
-                
-                imageView.image = UIImage(named: "party_icon")
-                imageView.contentMode = .scaleAspectFit
-                
-                annotationView!.leftCalloutAccessoryView = imageView
             } else {
                 annotationView!.annotation = annotation
             }
