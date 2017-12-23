@@ -439,8 +439,8 @@ class HomeViewController: UIViewController, UITextFieldDelegate, UITextViewDeleg
                         let longitude = location["lng"] as? Double
                         let latitude  = location["lat"] as? Double
                         
-                        party.coordinate = CLLocationCoordinate2DMake(Double(latitude!), Double(longitude!))
-                        
+                        party.longitude = longitude!
+                        party.latitude  = latitude!
                     }
                     
                 } catch {

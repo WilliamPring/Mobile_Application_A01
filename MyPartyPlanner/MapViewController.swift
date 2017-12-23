@@ -20,11 +20,17 @@
 import UIKit
 import MapKit
 import CoreLocation
+import CoreData
 
 class MapViewController: UIViewController, MKMapViewDelegate {
     
     //MARK: Properties
     lazy var allAnnotations: [MKAnnotation]? = nil
+    
+    lazy var context: NSManagedObjectContext = {
+        let appDel:AppDelegate = (UIApplication.shared.delegate as! AppDelegate)
+        return appDel.managedObjectContext
+    }()
 
     var mapView : MKMapView!
     
@@ -47,30 +53,59 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        //Load all the annotations on the map
-        /*
-        let tblController   = self.tabBarController?.viewControllers?[0] as! UINavigationController
-        let pViewController = tblController.viewControllers[0] as! PartyTableViewController
         
-        //First clear the map
-        if allAnnotations != nil {
-            self.mapView.removeAnnotations(allAnnotations!)
+        let partyFetch = NSFetchRequest<Party>(entityName: "Party")
+        var isAddAnnotations:Bool = false
+        var theAcceptedAnnotation:[MKAnnotation] = []
+        
+        do {
+            //Remove all annotations
+            if allAnnotations != nil {
+                self.mapView.removeAnnotations(allAnnotations!)
+            }
+            
+            let theParties:[Party] = try context.fetch(partyFetch)
+            
+            for party in theParties {
+                if party.latitude != 0 && party.longitude != 0 {
+                    let pin:MKParty = MKParty(title: party.title!,
+                                              latitude:  party.latitude,
+                                              longitude: party.longitude,
+                                              info: party.subtitle!)
+                    theAcceptedAnnotation.append(pin)
+                    
+                    
+                    /*
+                    let annView:MKAnnotationView = MKPinAnnotationView(annotation: pin, reuseIdentifier: "Party")
+                    annView.canShowCallout = true
+                    
+                    let btn = UIButton(type: .detailDisclosure)
+                    annView.rightCalloutAccessoryView = btn */
+                    
+                    isAddAnnotations = true
+                }
+            }
+            
+            if isAddAnnotations == true {
+                allAnnotations = theAcceptedAnnotation
+                mapView.addAnnotations(allAnnotations!)
+            }
+            
+        } catch {
+            fatalError("Failed to fetch employees: \(error)")
         }
-        */
-        //Now add the new pins
-        //allAnnotations = pViewController.parties
-
-        //mapView.addAnnotations(allAnnotations!)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        loadView()
     }
     
     override func loadView() {
         mapView = MKMapView()
         view = mapView
+        mapView.delegate = self
         
         //Template based off Igor's sample code provided
         let standardString:String  = NSLocalizedString("Standard", comment: "Standard Map View")
@@ -104,6 +139,53 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        let identifier = "Party"
+        
+        if annotation is MKParty {
+            var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+            
+            if annotationView == nil {
+                annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+                annotationView!.canShowCallout = true
+                
+                //Add detail button
+                let btn = UIButton(type: .detailDisclosure)
+                annotationView!.rightCalloutAccessoryView = btn
+                
+                //Change tint colour
+                (annotationView as! MKPinAnnotationView).pinTintColor = UIColor.brown
+                
+                //Set image
+                let imageView = UIImageView(frame: CGRect(x: 0, y: 0,
+                                                          width: annotationView!.frame.height,
+                                                          height: annotationView!.frame.height))
+                
+                imageView.image = UIImage(named: "party_icon")
+                imageView.contentMode = .scaleAspectFit
+                
+                annotationView!.leftCalloutAccessoryView = imageView
+            } else {
+                annotationView!.annotation = annotation
+            }
+            
+            return annotationView
+        }
+        
+        //This might mean apple's default pin is being displayed
+        return nil
+    }
+    
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        let party:MKParty = view.annotation as! MKParty
+        let placeName = party.title
+        let placeInfo = party.info
+        let ac = UIAlertController(title: placeName, message: placeInfo, preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "OK", style: .default))
+        present(ac, animated: true)
     }
     
     

@@ -48,6 +48,9 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Map" image="MapIcon" id="96e-wx-ZZC"/>
+                    <connections>
+                        <outlet property="mkMapView" destination="XVT-4h-Evx" id="gFn-aw-vgX"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TMb-L9-eif" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
