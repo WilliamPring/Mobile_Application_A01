@@ -16,6 +16,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        //UIMenuController related code
+        let menuItemOne = UIMenuItem(title: "View",   action: #selector(PartyTableViewCell.ViewParty(_:)))
+        let menuItemTwo = UIMenuItem(title: "Delete", action: #selector(PartyTableViewCell.DeleteParty(_:)))
+
+        let menuController = UIMenuController.shared
+        var newItems = menuController.menuItems ?? [UIMenuItem]()
+        
+        newItems.append(menuItemOne)
+        newItems.append(menuItemTwo)
+        
+        menuController.menuItems = newItems
+        
         return true
     }
 

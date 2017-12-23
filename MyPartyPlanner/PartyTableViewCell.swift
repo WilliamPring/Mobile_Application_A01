@@ -19,6 +19,7 @@ import UIKit
 class PartyTableViewCell: UITableViewCell {
 
     @IBOutlet weak var nameLabel: UILabel!
+    var partyDelegate:PartyProtocol?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,6 +29,16 @@ class PartyTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
         // Configure the view for the selected state
+    }
+    
+    //For UIMenuController - Tap Handler
+    func ViewParty(_ sender:AnyObject?){
+        partyDelegate?.viewParty(thePartyCell: self)
+    }
+    
+    func DeleteParty(_ sender:AnyObject?){
+        let newIndex :IndexPath = (self.superview?.superview as! UITableView).indexPath(for: self)!
+        partyDelegate?.deleteParty(indexPath: newIndex)
     }
 
 }

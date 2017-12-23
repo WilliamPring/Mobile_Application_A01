@@ -19,7 +19,46 @@ import MapKit
 import os.log
 import CoreData
 
-class PartyTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
+protocol PartyProtocol {
+    func viewParty(thePartyCell:PartyTableViewCell)
+    func deleteParty(indexPath:IndexPath)
+}
+
+class PartyTableViewController: UITableViewController, NSFetchedResultsControllerDelegate, PartyProtocol {
+    
+    func viewParty(thePartyCell:PartyTableViewCell) {
+        self.performSegue(withIdentifier: "ShowDetail", sender: thePartyCell)
+    }
+    
+    func deleteParty(indexPath:IndexPath) {
+        //Get Object
+        let sParty: Party = fetchedResultsController.object(at: indexPath)
+        alertBeforeDelete(theParty: sParty)
+    }
+    
+    func alertBeforeDelete(theParty:Party) {
+        
+        let title = "Delete \"\(theParty.title ?? "Undefined")\"?"
+        let message = "Are you sure you want to delete this item?"
+        let ac = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        ac.addAction(cancelAction)
+        
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler:
+        {(action)->Void in
+            //Delete object and save core data state
+            do {
+                self.context.delete(theParty)
+                try self.context.save()
+            } catch {
+                print("Error data not saved, \(error)")
+            }
+        })
+        
+        ac.addAction(deleteAction)
+        present(ac, animated: true, completion: nil)
+    }
     
     //
     //MARK: Properties
@@ -105,6 +144,7 @@ class PartyTableViewController: UITableViewController, NSFetchedResultsControlle
         
         cell.textLabel?.text = party.title
         cell.detailTextLabel?.text = party.subtitle
+        (cell as! PartyTableViewCell).partyDelegate = self
         
         //Populate the cell from the object
         return cell
@@ -121,15 +161,31 @@ class PartyTableViewController: UITableViewController, NSFetchedResultsControlle
         if editingStyle == .delete {
             //Get Object
             let sParty: Party = fetchedResultsController.object(at: indexPath)
-            
-            //Delete object and save core data state
-            do {
-                self.context.delete(sParty)
-                try self.context.save()
-            } catch {
-                print("Error data not saved, \(error)")
-            }
+            alertBeforeDelete(theParty: sParty)
         }
+    }
+    
+    //
+    //UIMenuController related
+    //
+    
+    override func tableView(_ tableView: UITableView, shouldShowMenuForRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    override func tableView(_ tableView: UITableView,
+                            canPerformAction action: Selector,
+                            forRowAt indexPath: IndexPath,
+                            withSender sender: Any?) -> Bool {
+        return action == #selector(PartyTableViewCell.ViewParty(_:)) || action == #selector(PartyTableViewCell.DeleteParty(_:))
+    }
+    
+    override func tableView(_ tableView: UITableView,
+                            performAction action: Selector,
+                            forRowAt indexPath: IndexPath,
+                            withSender sender: Any?) {
+        //Handle on standard actions here, custom actions don't trigger this method
+        //Still needed for menu to show in the UITableView
     }
     
     
@@ -214,6 +270,5 @@ class PartyTableViewController: UITableViewController, NSFetchedResultsControlle
                 fatalError("Unexpected Segue Identifier error")
         }
     }
- 
 
 }
