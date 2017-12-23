@@ -48,6 +48,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     
     override func viewDidAppear(_ animated: Bool) {
         //Load all the annotations on the map
+        /*
         let tblController   = self.tabBarController?.viewControllers?[0] as! UINavigationController
         let pViewController = tblController.viewControllers[0] as! PartyTableViewController
         
@@ -55,11 +56,11 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         if allAnnotations != nil {
             self.mapView.removeAnnotations(allAnnotations!)
         }
-        
+        */
         //Now add the new pins
-        allAnnotations = pViewController.parties
+        //allAnnotations = pViewController.parties
 
-        mapView.addAnnotations(allAnnotations!)
+        //mapView.addAnnotations(allAnnotations!)
     }
     
     override func viewDidLoad() {

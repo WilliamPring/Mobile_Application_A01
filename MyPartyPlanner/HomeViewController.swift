@@ -19,10 +19,18 @@
 import UIKit
 import MapKit
 import os.log
+import CoreData
 
 class HomeViewController: UIViewController, UITextFieldDelegate, UITextViewDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
 
     //MARK: Properties
+    var party: Party?
+    
+    lazy var context: NSManagedObjectContext = {
+        let appDel:AppDelegate = (UIApplication.shared.delegate as! AppDelegate)
+        return appDel.managedObjectContext
+    }()
+
     let dateFormatter = DateFormatter()
     
     //Localized strings
@@ -32,7 +40,6 @@ class HomeViewController: UIViewController, UITextFieldDelegate, UITextViewDeleg
     let usaSeattle:String      = NSLocalizedString("USA, Seattle", comment: "")
     let usaSanFrancisco:String = NSLocalizedString("USA, San Francisco", comment: "")
     
-    var party: Party?
     var locationOptions: [String] = []
     
     var selectedLocation: String = ""
@@ -202,22 +209,25 @@ class HomeViewController: UIViewController, UITextFieldDelegate, UITextViewDeleg
         }
         
         let amountOfPeople: Int = Int(memberCountTextLabel.text!)!
-        let randCoordinateLocation = CLLocationCoordinate2DMake(43.390297, -80.403226) //Points at Conestoga College (Default)
-
+        
+        //Save information, create new NSManagedObject if necessary
+        if party == nil {
+            let entity = NSEntityDescription.entity(forEntityName: "Party", in:context)
+            party = Party(entity: entity!, insertInto: context)
+        }
+        
+        //Assign the new edits
+        party?.title = name
+        party?.subtitle = subtitle
+        party?.location = location
+        party?.dateOfEvent = randDate as NSDate
+        party?.isPartyCoverActive = switchVal
+        party?.numOfPeople = Int32(amountOfPeople)
+        
         //
         //Make REST API call to Google Geocodings
         //GET the proper coordinates for the city chosen
         //
-        
-        //Construct the new party object based on the field values
-        party = Party(title: name,
-                      subtitle: subtitle,
-                      location: location,
-                      dateOfEvent: randDate,
-                      amountOfPeople: amountOfPeople,
-                      coordinate: randCoordinateLocation,
-                      isPartyCoverActive: switchVal)
-        
         getGeoCode(party: party!)
     }
     
@@ -291,12 +301,12 @@ class HomeViewController: UIViewController, UITextFieldDelegate, UITextViewDeleg
         if let party = party {
             navigationItem.title      = party.title
             partyNameTextField.text   = party.title
-            dateTextField.text        = dateFormatter.string(from: party.dateOfEvent)
+            dateTextField.text        = dateFormatter.string(from: party.dateOfEvent! as Date)
             locationTextField.text    = party.location
-            memberCountTextLabel.text = String(party.amountOfPeople)
+            memberCountTextLabel.text = String(party.numOfPeople)
             subtitleTextField.text    = party.subtitle
-            switchField.isOn          = party.isPartyCoverActive //Switch
-            stepperField.value        = Double(party.amountOfPeople) //Stepper
+            switchField.isOn          = party.isPartyCoverActive  //Switch
+            stepperField.value        = Double(party.numOfPeople) //Stepper
         }
         
         //Text view border
@@ -377,7 +387,6 @@ class HomeViewController: UIViewController, UITextFieldDelegate, UITextViewDeleg
             default:
                 fatalError("Textfield tag was not recognized")
         }
-        
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
@@ -416,25 +425,34 @@ class HomeViewController: UIViewController, UITextFieldDelegate, UITextViewDeleg
     func getGeoCode(party: Party) {
         
         //var json: Any?
-        let url = GeoCodeAPI.getGeoCodeGoogleURL(cityName: party.location)
+        let url = GeoCodeAPI.getGeoCodeGoogleURL(cityName: party.location!)
         let request = URLRequest(url: url)
         let task    = GeoCodeAPI.session.dataTask(with: request) { (data, response, error) -> Void in
             //Parse JSON response object 
-            do {
-                if let json = try JSONSerialization.jsonObject(with: data!) as? [String: Any],
-                   let results  = json["results"] as? [[String: Any]],
-                   let geometry = results[0]["geometry"] as? [String: Any],
-                   let location = geometry["location"]   as? [String: Any] {
+            if party.location != "" {
+                do {
+                    if let json = try JSONSerialization.jsonObject(with: data!) as? [String: Any],
+                        let results  = json["results"] as? [[String: Any]],
+                        let geometry = results[0]["geometry"] as? [String: Any],
+                        let location = geometry["location"]   as? [String: Any] {
+                        
+                        let longitude = location["lng"] as? Double
+                        let latitude  = location["lat"] as? Double
+                        
+                        party.coordinate = CLLocationCoordinate2DMake(Double(latitude!), Double(longitude!))
+                        
+                    }
                     
-                    let longitude = location["lng"] as? Double
-                    let latitude  = location["lat"] as? Double
-                    
-                    party.coordinate = CLLocationCoordinate2DMake(Double(latitude!), Double(longitude!))
-
+                } catch {
+                    print(error)
                 }
-                
+            }
+            
+            //Now save the Core Data state
+            do {
+                try self.context.save()
             } catch {
-                print(error)
+                print("Error data not saved, \(error)")
             }
             
         }

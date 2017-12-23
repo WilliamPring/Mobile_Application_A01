@@ -17,60 +17,60 @@
 import UIKit
 import MapKit
 import os.log
+import CoreData
 
-class PartyTableViewController: UITableViewController {
+class PartyTableViewController: UITableViewController, NSFetchedResultsControllerDelegate {
     
     //
     //MARK: Properties
     //
-    var parties = [Party]()
+    var fetchedResultsController: NSFetchedResultsController<Party>!
+    @IBOutlet weak var partyTableView: UITableView!
+    
+    //Mark: - Properties
+    lazy var context: NSManagedObjectContext = {
+        let appDel:AppDelegate = (UIApplication.shared.delegate as! AppDelegate)
+        return appDel.managedObjectContext
+    }()
+    
+    func fetchAllPartyObjects() {
+        let fetchRequest = NSFetchRequest<Party>(entityName: "Party")
+        
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+        
+        fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
+                                                              managedObjectContext: context,
+                                                              sectionNameKeyPath: nil,
+                                                              cacheName: nil)
+        fetchedResultsController.delegate = self
+        
+        do {
+            try fetchedResultsController.performFetch()
+        } catch {
+            print("Unable to perform fetch: \(error)")
+        }
+    }
+    
+    
     
     //
     //MARK: Actions
     //
     @IBAction func unwindToPartyList(sender: UIStoryboardSegue) {
-        if let sourceViewController = sender.source as? HomeViewController, let party = sourceViewController.party {
-            
-            if let selectedIndexPath = tableView.indexPathForSelectedRow {
-                parties[selectedIndexPath.row] = party
-                tableView.reloadRows(at: [selectedIndexPath], with: .none)
-                
-            } else {
-                let newIndexPath = IndexPath(row: parties.count, section: 0)
-                parties.append(party)
-                tableView.insertRows(at: [newIndexPath], with: .automatic)
-            }
-           
-        }
-    }
-    
-    //
-    //MARK: Private Methods
-    //
-    private func loadAllParties() {
         
-        let randCoordinateLocation = CLLocationCoordinate2DMake(43.390297, -80.403226) //Points at Conestoga College
-        
-        //Create some sample data to preload for the user to see
-        let testDate: Date = Date()
-        
-        let partyOne   = Party(title: "TEST_1",
-                               subtitle: "Test 1 Sample",
-                               location: "Kitchener",
-                               dateOfEvent: testDate,
-                               amountOfPeople: 10,
-                               coordinate: randCoordinateLocation,
-                               isPartyCoverActive: false)
-
-        parties += [partyOne] //Add party objects to the collection
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.leftBarButtonItem = self.editButtonItem //Handles deletion of cells in that TableView
+        //Handles deletion of cells in that TableView (left barbutton)
+        self.navigationItem.leftBarButtonItem = self.editButtonItem
         
-        loadAllParties()
+        fetchAllPartyObjects()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        //Get all party objects 
     }
 
     override func didReceiveMemoryWarning() {
@@ -78,63 +78,103 @@ class PartyTableViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
 
+    
+    
     //
     // MARK: - Table view data source (Mandatory)
     //
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1 // Return the number of sections
+        return 1
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return parties.count // Return the number of rows 
-
+        // Return the number of rows
+        guard let parties = fetchedResultsController.sections?[section] else {
+            return 0
+        }
+        
+        return parties.numberOfObjects
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         //Called for each cell separately
         let cell = tableView.dequeueReusableCell(withIdentifier: "PartyTableViewCell", for: indexPath)
-        let party = parties[indexPath.row]
+        
+        // Set up the cell
+        let party = self.fetchedResultsController.object(at: indexPath)
         
         cell.textLabel?.text = party.title
         cell.detailTextLabel?.text = party.subtitle
-
+        
+        //Populate the cell from the object
         return cell
     }
  
-
-    
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true // Return false if you do not want the specified item to be editable.
     }
  
-
-    
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         // Delete the row from the data source
         if editingStyle == .delete {
-            parties.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            //Get Object
+            let sParty: Party = fetchedResultsController.object(at: indexPath)
+            
+            //Delete object and save core data state
+            do {
+                self.context.delete(sParty)
+                try self.context.save()
+            } catch {
+                print("Error data not saved, \(error)")
+            }
         }
     }
     
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
+    
+    //
+    //NSFetchedResultsControllerDelegate --> Protocol with all the required methods to identify changes in TableView
+    //
+    
+    func controllerWillChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        partyTableView.beginUpdates()
     }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange sectionInfo: NSFetchedResultsSectionInfo, atSectionIndex sectionIndex: Int, for type: NSFetchedResultsChangeType) {
+        switch type {
+            case .insert:
+                partyTableView.insertSections(IndexSet(integer: sectionIndex), with: .fade)
+            case .delete:
+                partyTableView.deleteSections(IndexSet(integer: sectionIndex), with: .fade)
+            case .move:
+                break
+            case .update:
+                break
+        }
     }
-    */
+    
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
+        switch type {
+            case .insert:
+                partyTableView.insertRows(at: [newIndexPath!], with: .fade)
+            case .delete:
+                partyTableView.deleteRows(at: [indexPath!], with: .fade)
+            case .update:
+                partyTableView.reloadRows(at: [indexPath!], with: .fade)
+            case .move:
+                partyTableView.moveRow(at: indexPath!, to: newIndexPath!)
+        }
+    }
+    
+    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        partyTableView.endUpdates()
+    }
+    
+    
+    
 
+    
     
     // MARK: - Navigation
 
@@ -165,10 +205,10 @@ class PartyTableViewController: UITableViewController {
                 }
             
                 //Grab the correct party now that the information has been obtained
-                let theParty = parties[indexPath.row]
-            
-                //Show the selected party, property of the HomeViewController classs
-                pDetailViewController.party = theParty
+                let oParty: Party = fetchedResultsController.object(at: indexPath)
+
+                //Show the selected party, property of the HomeViewController class
+                pDetailViewController.party = oParty
             
             default:
                 fatalError("Unexpected Segue Identifier error")
