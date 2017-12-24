@@ -226,7 +226,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         let placeName = party.title
         let placeInfo = party.info
         let ac = UIAlertController(title: placeName, message: placeInfo, preferredStyle: .alert)
-        ac.addAction(UIAlertAction(title: "OK", style: .default))
+        ac.addAction(UIAlertAction(title: NSLocalizedString("OK", comment: ""), style: .default))
         present(ac, animated: true)
     }
     
