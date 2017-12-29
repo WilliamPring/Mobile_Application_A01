@@ -6,6 +6,14 @@
 //  Copyright © 2017 Student. All rights reserved.
 //
 
+/*
+ Filename: Party+CoreDataProperties.swift
+ By: Naween M, William P, Denys P
+ Assignment: Assignment 3 Mobile iOS
+ Date: December 2, 2017
+ Description: File for ensuring persistent data storage. Contains the class definition.
+ */
+
 import Foundation
 import CoreData
 import CoreLocation

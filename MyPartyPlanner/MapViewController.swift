@@ -9,7 +9,7 @@
 /*
  Filename: PartyTableViewController.swift
  By: Naween M, William P, Denys P
- Assignment: Assignment 2 Mobile iOS
+ Assignment: Assignment 3 Mobile iOS
  Date: December 2, 2017
  Description: The MapViewController will help display also a SegmentedControl inside the MapView for users 
  to switch which style they want to view the location pins. It also loads all the pins into the map from the
@@ -76,8 +76,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                 }
             }
             
-            if currLocation != nil {
-                let currAnnotation:MKParty = MKParty(title: "Your Location",
+            if currLocation != nil {                
+                let currAnnotation:MKParty = MKParty(title: NSLocalizedString("Your location", comment: ""),
                                                      latitude:  currLocation!.coordinate.latitude,
                                                      longitude: currLocation!.coordinate.longitude,
                                                      info: "")
@@ -184,7 +184,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                 annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
                 annotationView!.canShowCallout = true
                 
-                if (annotation as! MKParty).title == "Your Location" {
+                if (annotation as! MKParty).title == NSLocalizedString("Your location", comment: "") {
                     isUserLocation = true
                 }
                 

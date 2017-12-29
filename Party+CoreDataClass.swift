@@ -6,6 +6,14 @@
 //  Copyright © 2017 Student. All rights reserved.
 //
 
+/*
+ Filename: Party+CoreDataClass.swift
+ By: Naween M, William P, Denys P
+ Assignment: Assignment 3 Mobile iOS
+ Date: December 2, 2017
+ Description: File for ensuring persistent data storage. Contains the class definition and methods.
+ */
+
 import Foundation
 import CoreData
 import CoreLocation
@@ -13,21 +21,6 @@ import CoreLocation
 @objc(Party)
 public class Party: NSManagedObject {
     var coordinate: CLLocationCoordinate2D? = nil
-    
-    /*
-    init(title:String, subtitle:String, location:String, details:String, dateOfEvent:NSDate,
-         numOfPeople:Int32, latitude:Double, longitude:Double, isPartyCoverActive:Bool) {
-        
-        self.title = title
-        self.subtitle = subtitle
-        self.location = location
-        self.details  = details
-        self.dateOfEvent = dateOfEvent
-        self.numOfPeople = numOfPeople
-        self.latitude   = latitude
-        self.longitude  = longitude
-        self.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-    } */
     
     override public func awakeFromInsert() {
         super.awakeFromInsert()

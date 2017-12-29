@@ -6,6 +6,8 @@
   Copyright © 2017 Student. All rights reserved.
 */
 
+/* Your location */
+"Your location" = "Ваше местоположение"; 
 
 /* Hybrid Map View */
 "Hybrid" = "гибридный";

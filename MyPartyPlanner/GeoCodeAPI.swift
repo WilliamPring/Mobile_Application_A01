@@ -6,6 +6,16 @@
 //  Copyright © 2017 Student. All rights reserved.
 //
 
+/*
+ Filename: GeoCodeAPI.swift
+ By: Naween M, William P, Denys P
+ Assignment: Assignment 3 Mobile iOS
+ Date: December 2, 2017
+ Description: This is for the RESTful API call to Google's Geocoding services so that 
+ the program can retrieve the geographical coordinates of a particular location
+ */
+
+
 import Foundation
 
 struct GeoCodeAPI {
